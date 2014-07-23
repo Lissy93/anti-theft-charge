@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <item name="switchOnOff" type="id">switchOnOff</item><item name="switchMovement" type="id">switchMovement</item>
-    <item name="switchPower" type="id">switchPower</item>
-    <item name="optTimeNone">optTimeNone</item><item name="optTime2">optTime2</item><item name="optTime5">optTime5</item><item name="optTime10">optTime10</item>
-    <item name="btnChoseTime">btnChooseTime</item><item name="linear" type="id">linear</item><item name="btnChooseTone" type="id">btnChooseTone</item><item name="cmdStop" type="id">cmdStop</item><item name="btnStop" type="id">btnStop</item><item name="btnAbout" type="id">btnAbout</item>
-</resources>

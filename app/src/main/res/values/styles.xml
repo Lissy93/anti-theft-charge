@@ -5,10 +5,8 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="HomeText">
+    <style name="HomeText" parent="OptionRow">
         <item name="android:textSize">25sp</item>
-        <item name="android:textColor">#ffebe8ec</item>
-        <item name="android:shadowColor">#ff1a1a1a</item>
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">1</item>

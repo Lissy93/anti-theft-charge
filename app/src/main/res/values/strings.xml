@@ -15,5 +15,5 @@
     <string name="title_activity_info_message">InfoMessage</string>
     <string name="longDescription">Anti Theft Charge was developed to solve the problem of not being able to safely charge your Android device in a public location where it could be unplugged and taken. \n \n To use this app, simply open Anti Theft Charge, and check that the first switch saying \'Enable Anti Theft Charge\' is switched to on, then just leave your device charging.\nWhen you want to unplug your phone or tablet, simply unlock your screen using your normal passcode, then unplug it from the power source. \nIf you do not unlock your keypad, it will presume you are an intruder, and the alarm will sound, until you unlock it and disable. \n\n Anti Theft Charge is still in development, the moevement feature that checks your device is not picked up or moved may not yet work on some Android devices. \n\nAdditional features are coming soon.\n</string>
     <string name="strHowToUseTitle">How To Use Anti Theft Charge</string>
-
+    <string name="chooseAlarm">Choose Alarm Tone</string>
 </resources>

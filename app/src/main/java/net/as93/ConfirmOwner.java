@@ -10,8 +10,7 @@ import android.widget.Button;
 public  class ConfirmOwner extends DialogFragment {
 
     static ConfirmOwner newInstance() {
-        ConfirmOwner co = new ConfirmOwner();
-        return co;
+		return new ConfirmOwner();
     }
 
     @Override

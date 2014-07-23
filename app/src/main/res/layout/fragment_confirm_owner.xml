@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Stop Alarm"
-        android:id="@id/cmdStop"
+        android:id="@+id/cmdStop"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true" />
 
