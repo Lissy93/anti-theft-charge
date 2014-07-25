@@ -31,7 +31,7 @@
                 android:id="@id/switchOnOff"
                 android:layout_gravity="right"
                 android:layout_weight="0.47"
-                android:checked="true"
+                android:checked="false"
                 style="@style/HomeText" />
 
         </LinearLayout>
@@ -55,7 +55,7 @@
                 android:id="@id/switchMovement"
                 android:layout_gravity="right"
                 android:layout_weight="0.47"
-                android:checked="true"
+                android:checked="false"
                 style="@style/HomeText"
                 />
 

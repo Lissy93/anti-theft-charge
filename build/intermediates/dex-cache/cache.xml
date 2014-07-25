@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pre-dex-items>
+
+    <item
+        dex="D:\Dropbox\Programing\GIT\AntiTheftCharge\app\build\intermediates\pre-dexed\debug\classes-524c94be43d0b24a90dc421a8a7e5f69c6d01e3c.jar"
+        jar="D:\Dropbox\Programing\GIT\AntiTheftCharge\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\19.0.1\classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="f71a6822470c9eb659d4f4a6cb57b780b35f058b"/>
+    <item
+        dex="D:\Dropbox\Programing\GIT\AntiTheftCharge\app\build\intermediates\pre-dexed\debug\support-v4-19.0.1-86449caa3c06777571b1db3c903b1b063abc9205.jar"
+        jar="C:\Users\Alicia\AppData\Local\Android\android-studio1\sdk\extras\android\m2repository\com\android\support\support-v4\19.0.1\support-v4-19.0.1.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="587da9a481ffd341d2fa091704489b89845ddacd"/>
+
+</pre-dex-items>

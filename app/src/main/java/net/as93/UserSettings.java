@@ -1,5 +1,8 @@
 package net.as93;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.media.MediaPlayer;
 
 /**
@@ -7,54 +10,63 @@ import android.media.MediaPlayer;
  */
 public class UserSettings {
 
-    private static String alarmTone = "alarm1";
-    private static int timeDelay = 0; // in seconds (0 | 2 | 5 | 10)
+    /* DEFAULTS */
+    private static SharedPreferences settings;
+    private static Editor editor;
+    private static String appKey;
 
-    private static boolean enabled = true;
-    private static boolean movement = true;
-    private static boolean charge = true;
 
     private static MediaPlayer mp = new MediaPlayer();
 
+    public UserSettings(Context c){
+        appKey = "atc";
+        settings = c.getSharedPreferences(appKey, Context.MODE_PRIVATE);
+        editor = settings.edit();
+    }
 
     public static String getAlarmTone() {
-        return alarmTone;
+        return settings.getString("alarmTone","alarm1");
     }
 
     public static void setAlarmTone(String alarmTone) {
-        UserSettings.alarmTone = alarmTone;
+        editor.putString("alarmTone",alarmTone);
+        editor.commit();
     }
 
     public static int getTimeDelay() {
-        return timeDelay;
+        return settings.getInt("timeDelay",0);
     }
 
     public static void setTimeDelay(int timeDelay) {
-        UserSettings.timeDelay = timeDelay;
+        editor.putInt("timeDelay",timeDelay);
+        editor.commit();
     }
 
     public static boolean isEnabled() {
-        return enabled;
+        return settings.getBoolean("isEnabled",false);
     }
 
     public static void setEnabled(boolean enabled) {
-        UserSettings.enabled = enabled;
+       editor.putBoolean("isEnabled",enabled);
+       editor.commit();
     }
 
     public static boolean isMovement() {
-        return movement;
+        return settings.getBoolean("isMovement",false);
     }
 
     public static void setMovement(boolean movement) {
-        UserSettings.movement = movement;
+        editor.putBoolean("isMovement",movement);
+        editor.commit();
     }
 
     public static boolean isCharge() {
-        return charge;
+        return settings.getBoolean("isCharge",true);
     }
 
     public static void setCharge(boolean charge) {
-        UserSettings.charge = charge;
+        editor.putBoolean("isCharge",charge);
+        editor.commit();
     }
 
     public static MediaPlayer getMp() {

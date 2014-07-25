@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -58,7 +59,7 @@ public class SettingsActivity extends Activity {
 
         });
 
-        UserSettings us = new UserSettings();
+        UserSettings us = new UserSettings(getApplicationContext());
         int seconds = us.getTimeDelay();
         int pos = 0;
         if(seconds==0){ pos = 0; } else if(seconds==2){pos = 1;} else if(seconds==5){pos = 2;} else if(seconds==10){pos = 3;}
@@ -69,7 +70,7 @@ public class SettingsActivity extends Activity {
                 // TODO Auto-generated method stub
                 LinearLayout ll = (LinearLayout) findViewById(R.id.linear);
 
-                UserSettings us = new UserSettings();
+                UserSettings us = new UserSettings(getApplicationContext());
 
                 if ("None".equals(items[which])) {
                     us.setTimeDelay(0);
@@ -104,7 +105,7 @@ public class SettingsActivity extends Activity {
 
         });
 
-        UserSettings us = new UserSettings();
+        UserSettings us = new UserSettings(getApplicationContext());
         String tone = us.getAlarmTone();
         int pos = 0;
         if(tone=="alarm1"){ pos = 0; } else if(tone=="alarm2"){pos = 1;} else if(tone=="alarm3"){pos = 2;} else if(tone=="alarm4"){pos = 3;}
@@ -112,20 +113,33 @@ public class SettingsActivity extends Activity {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                UserSettings us = new UserSettings();
+                UserSettings us = new UserSettings(getApplicationContext());
                 LinearLayout ll = (LinearLayout) findViewById(R.id.linear);
+                MediaPlayer preview;
                 if ("Alarm 1".equals(items[which])) {
                     us.setAlarmTone("alarm1");
-                    Toast.makeText(getApplicationContext(), "Alarm 1",  Toast.LENGTH_SHORT).show();
+                    preview = MediaPlayer.create(c, R.raw.alarm1);
+                    preview.seekTo(preview.getDuration()-(2500));
+                    preview.start();
+                    Toast.makeText(getApplicationContext(), "Alarm 1 Note: this preview alarm is not at full volume",  Toast.LENGTH_SHORT).show();
                 } else if ("Alarm 2".equals(items[which])) {
                     us.setAlarmTone("alarm2");
-                    Toast.makeText(getApplicationContext(), "Alarm 2",  Toast.LENGTH_SHORT).show();
+                    preview = MediaPlayer.create(c, R.raw.alarm2);
+                    preview.seekTo(preview.getDuration()-(2500));
+                    preview.start();
+                    Toast.makeText(getApplicationContext(), "Alarm 2 set. Note: this preview alarm is not at full volume",  Toast.LENGTH_SHORT).show();
                 } else if ("Alarm 3".equals(items[which])) {
                     us.setAlarmTone("alarm3");
-                    Toast.makeText(getApplicationContext(), "Alarm 3",  Toast.LENGTH_SHORT).show();
+                    preview = MediaPlayer.create(c, R.raw.alarm3);
+                    preview.seekTo(preview.getDuration()-(2500));
+                    preview.start();
+                    Toast.makeText(getApplicationContext(), "Alarm 3 Note: this preview alarm is not at full volume",  Toast.LENGTH_SHORT).show();
                 } else if ("Alarm 4".equals(items[which])) {
                     us.setAlarmTone("alarm4");
-                    Toast.makeText(getApplicationContext(), "Alarm 4",  Toast.LENGTH_SHORT).show();
+                    preview = MediaPlayer.create(c, R.raw.alarm4);
+                    preview.seekTo(preview.getDuration()-(2500));
+                    preview.start();
+                    Toast.makeText(getApplicationContext(), "Alarm 4 Note: this preview alarm is not at full volume",  Toast.LENGTH_SHORT).show();
                 }
 
             }

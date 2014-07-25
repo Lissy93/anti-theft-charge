@@ -32,7 +32,7 @@ public class PowerReciever extends BroadcastReceiver {
         boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
                 status == BatteryManager.BATTERY_STATUS_FULL;
 
-        UserSettings us = new UserSettings();
+        UserSettings us = new UserSettings(context);
 
         KeyguardManager kgMgr =  (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
         boolean showing = kgMgr.inKeyguardRestrictedInputMode();
@@ -47,7 +47,8 @@ public class PowerReciever extends BroadcastReceiver {
 
 
     private void playAlarm(Context c){
-        UserSettings us = new UserSettings();
+        final Context context = c;
+        UserSettings us = new UserSettings(c);
         String tone = us.getAlarmTone();
         int soundId = R.raw.alarm1;
         if(tone=="alarm1"){soundId = R.raw.alarm1; } else if(tone=="alarm2"){soundId = R.raw.alarm2; }
@@ -60,7 +61,7 @@ public class PowerReciever extends BroadcastReceiver {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                UserSettings us = new UserSettings();
+                UserSettings us = new UserSettings(context);
                 us.getMp().start();
                    }
         }, timeDelay);

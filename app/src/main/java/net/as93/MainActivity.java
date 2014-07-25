@@ -72,6 +72,7 @@ public class MainActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
             return rootView;
         }
     }
@@ -80,13 +81,14 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState){
+        checkAppState();
         super.onPostCreate(savedInstanceState);
         mainOnOff = (Switch) findViewById(R.id.switchOnOff);
         mainOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 checkAppState();
-                UserSettings us = new UserSettings();
+                UserSettings us = new UserSettings(getApplicationContext());
                 us.setEnabled(isChecked);
                 if(us.getMp().isPlaying()){
                     us.getMp().stop();
@@ -118,7 +120,7 @@ public class MainActivity extends ActionBarActivity {
         swchPower.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                UserSettings us = new UserSettings();
+                UserSettings us = new UserSettings(getApplicationContext());
                 us.setCharge(false);
             }
         });
