@@ -25,7 +25,7 @@
             android:theme="@android:style/Theme.Holo.Dialog">
         </activity>
 
-        <receiver android:name="net.as93.PowerReciever" >
+        <receiver android:name=".PowerReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>

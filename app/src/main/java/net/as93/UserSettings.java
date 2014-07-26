@@ -1,5 +1,8 @@
 package net.as93;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.media.MediaPlayer;
 
 /**
@@ -7,61 +10,69 @@ import android.media.MediaPlayer;
  */
 public class UserSettings {
 
-    private static String alarmTone = "alarm1";
-    private static int timeDelay = 0; // in seconds (0 | 2 | 5 | 10)
-
-    private static boolean enabled = true;
-    private static boolean movement = true;
-    private static boolean charge = true;
-
-    private static MediaPlayer mp = new MediaPlayer();
+    /* DEFAULTS */
+    private SharedPreferences settings;
+    private Editor editor;
 
 
-    public static String getAlarmTone() {
-        return alarmTone;
+	private static MediaPlayer mp = new MediaPlayer();
+
+    public UserSettings(Context c){
+		String appKey = "atc";
+        settings = c.getSharedPreferences(appKey, Context.MODE_PRIVATE);
+        editor = settings.edit();
     }
 
-    public static void setAlarmTone(String alarmTone) {
-        UserSettings.alarmTone = alarmTone;
+    public String getAlarmTone() {
+        return settings.getString("alarmTone","alarm1");
     }
 
-    public static int getTimeDelay() {
-        return timeDelay;
+    public void setAlarmTone(String alarmTone) {
+        editor.putString("alarmTone",alarmTone);
+        editor.commit();
     }
 
-    public static void setTimeDelay(int timeDelay) {
-        UserSettings.timeDelay = timeDelay;
+    public int getTimeDelay() {
+        return settings.getInt("timeDelay",0);
     }
 
-    public static boolean isEnabled() {
-        return enabled;
+    public void setTimeDelay(int timeDelay) {
+        editor.putInt("timeDelay",timeDelay);
+        editor.commit();
     }
 
-    public static void setEnabled(boolean enabled) {
-        UserSettings.enabled = enabled;
+    public boolean isEnabled() {
+        return settings.getBoolean("isEnabled",false);
     }
 
-    public static boolean isMovement() {
-        return movement;
+    public void setEnabled(boolean enabled) {
+       editor.putBoolean("isEnabled",enabled);
+       editor.commit();
     }
 
-    public static void setMovement(boolean movement) {
-        UserSettings.movement = movement;
+    public boolean isMovement() {
+        return settings.getBoolean("isMovement",false);
     }
 
-    public static boolean isCharge() {
-        return charge;
+    public void setMovement(boolean movement) {
+        editor.putBoolean("isMovement",movement);
+        editor.commit();
     }
 
-    public static void setCharge(boolean charge) {
-        UserSettings.charge = charge;
+    public boolean isCharge() {
+        return settings.getBoolean("isCharge",true);
     }
 
-    public static MediaPlayer getMp() {
+    public void setCharge(boolean charge) {
+        editor.putBoolean("isCharge",charge);
+        editor.commit();
+    }
+
+    public MediaPlayer getMp() {
         return mp;
     }
 
-    public static void setMp(MediaPlayer mp) {
+    public void setMp(MediaPlayer mp) {
         UserSettings.mp = mp;
     }
 }

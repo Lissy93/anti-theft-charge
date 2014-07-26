@@ -9,7 +9,7 @@
     tools:context="net.as93.ConfirmOwner$PlaceholderFragment">
 
     <TextView
-        android:text="Confirm Stop Alarm"
+        android:text="@string/confirm_stop_alarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView" />
@@ -17,7 +17,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Stop Alarm"
+        android:text="@string/stop_alarm"
         android:id="@+id/cmdStop"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true" />
