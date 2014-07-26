@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/bg"
     android:padding="10dp">
 
     <TextView
@@ -11,12 +12,14 @@
         android:text="@string/strHowToUseTitle"
         android:id="@+id/textView"
         android:layout_gravity="center"
+        android:textColor="@android:color/white"
         android:textAppearance="@android:style/TextAppearance.Large"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="40dip"
+        android:textColor="@android:color/white"
         android:text="@string/longDescription"
         android:textAppearance="@android:style/TextAppearance.Small"
         android:maxLines="25"/>
