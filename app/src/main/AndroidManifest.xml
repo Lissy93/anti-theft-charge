@@ -1,41 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="net.as93" >
-
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" >
-    </uses-permission>
+    package="com.aliciasykes.anti_theft_charge">
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/CustomActionBarTheme" >
-        <activity
-            android:name="net.as93.MainActivity"
-            android:label="@string/app_name" >
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:label="@string/app_name"
-            android:name=".InfoMessage"
-            android:theme="@android:style/Theme.Holo.Dialog">
-        </activity>
-
-        <receiver android:name="net.as93.PowerReciever" >
-            <intent-filter>
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
-            </intent-filter>
-        </receiver>
-
-        <activity
-            android:name="net.as93.SettingsActivity"
-            android:label="@string/title_activity_settings" >
-        </activity>
-
     </application>
 
 </manifest>
