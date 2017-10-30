@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.aliciasykes.anti_theft_charge.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <RelativeLayout android:id="@+id/RelativeLayout01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <com.dx.dxloadingbutton.lib.LoadingButton
+            android:id="@+id/toggleButton"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/strToggleDescription"
+            android:text="@string/toggleATC"
+            app:lb_resetAfterFailed="true"
+            app:lb_btnRippleColor="#000000"
+            app:lb_btnDisabledColor="#cccccc"
+            app:lb_disabledTextColor="@color/colorPrimaryDark"
+            app:lb_btnText="@string/toggleATC"
+            />
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
+
+
