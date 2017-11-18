@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.aliciasykes.anti_theft_charge.MainActivity">
 
-    <RelativeLayout android:id="@+id/RelativeLayout01"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        tools:layout_editor_absoluteX="86dp"
+        tools:layout_editor_absoluteY="166dp">
 
         <com.dx.dxloadingbutton.lib.LoadingButton
             android:id="@+id/toggleButton"
@@ -18,12 +20,11 @@
             android:layout_centerInParent="true"
             android:contentDescription="@string/strToggleDescription"
             android:text="@string/toggleATC"
-            app:lb_resetAfterFailed="true"
-            app:lb_btnRippleColor="#000000"
             app:lb_btnDisabledColor="#cccccc"
-            app:lb_disabledTextColor="@color/colorPrimaryDark"
+            app:lb_btnRippleColor="#000000"
             app:lb_btnText="@string/toggleATC"
-            />
+            app:lb_disabledTextColor="@color/colorPrimaryDark"
+            app:lb_resetAfterFailed="true" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

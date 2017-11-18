@@ -1,8 +1,10 @@
 package com.aliciasykes.anti_theft_charge
 
+import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.support.v4.content.ContextCompat
 import android.view.View
 import com.dx.dxloadingbutton.lib.LoadingButton
 
@@ -37,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         toggleButton.startLoading()
         Handler().postDelayed({
             toggleButton.loadingSuccessful()
+            this.updateBackgroundColor(R.color.colorSafe)
         }, 500)
         armed = true
     }
@@ -47,6 +50,12 @@ class MainActivity : AppCompatActivity() {
      */
     private fun disarmDevice(){
         toggleButton.reset()
+        this.updateBackgroundColor()
         armed = false
+    }
+
+    private fun updateBackgroundColor( newBgColor: Int = R.color.colorNeutral){
+        val mainLayout = findViewById<View>(R.id.mainLayout)
+        mainLayout.setBackgroundColor(ContextCompat.getColor(this, newBgColor))
     }
 }
