@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Anti Theft Charge</string>
-    <string name="toggleATC">Toggle ATF</string>
+    <string name="toggleATC">Tap to Ptotect Device</string>
     <string name="strToggleDescription">Tap to enable or disable anti theft charge</string>
 </resources>

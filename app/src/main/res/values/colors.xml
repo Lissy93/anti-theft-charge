@@ -5,6 +5,6 @@
     <color name="colorAccent">#FFC107</color>
 
     <color name="colorSafe">#2bb673</color>
-    <color name="colorNeutral">#ffffff</color>
+    <color name="colorNeutral">#303030</color>
     <color name="colorDanger">#ae1212</color>
 </resources>

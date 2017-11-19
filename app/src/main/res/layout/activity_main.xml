@@ -10,14 +10,17 @@
         android:id="@+id/mainLayout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:background="@color/colorNeutral"
         tools:layout_editor_absoluteX="86dp"
         tools:layout_editor_absoluteY="166dp">
 
         <com.dx.dxloadingbutton.lib.LoadingButton
             android:id="@+id/toggleButton"
-            android:layout_width="300dp"
-            android:layout_height="100dp"
-            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50dp"
             android:contentDescription="@string/strToggleDescription"
             android:text="@string/toggleATC"
             app:lb_btnColor="@color/colorAccent"
@@ -25,7 +28,8 @@
             app:lb_btnRippleColor="#000000"
             app:lb_btnText="@string/toggleATC"
             app:lb_disabledTextColor="@color/colorPrimaryDark"
-            app:lb_resetAfterFailed="true" />
+            app:lb_resetAfterFailed="true"
+            app:lb_textColor="@color/colorNeutral" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
