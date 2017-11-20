@@ -7,11 +7,11 @@ import android.os.Handler
 import android.support.v4.content.ContextCompat
 import android.view.View
 import com.dx.dxloadingbutton.lib.LoadingButton
-import android.R.attr.start
 import android.animation.ArgbEvaluator
 import android.animation.ObjectAnimator
-import android.R.attr.button
 import android.graphics.drawable.ColorDrawable
+
+
 
 
 
@@ -63,13 +63,22 @@ class MainActivity : AppCompatActivity() {
         armed = false
     }
 
+    /**
+     * Updates the background color of main layout
+     * With a nice fade animation of by default 1 second
+     */
     private fun updateBackgroundColor( newBgColorId: Int = R.color.colorNeutral){
         val mainLayout = findViewById<View>(R.id.mainLayout)
-        val oldBgColor = (mainLayout.background as ColorDrawable).color
-        val newBgColor = ContextCompat.getColor(this, newBgColorId)
         val bgFadeDuration: Long = 1000
-        val colorFade = ObjectAnimator.ofObject(mainLayout, "backgroundColor", ArgbEvaluator(), oldBgColor, newBgColor)
-        colorFade.setDuration(bgFadeDuration)
+        val newBgColor = ContextCompat.getColor(this, newBgColorId)
+        val oldBgColor =
+                if (mainLayout.background is ColorDrawable)
+                    (mainLayout.background as ColorDrawable).color
+                else Color.TRANSPARENT
+
+        val colorFade = ObjectAnimator.ofObject(
+                mainLayout, "backgroundColor", ArgbEvaluator(), oldBgColor, newBgColor)
+        colorFade.duration = bgFadeDuration
         colorFade.start()
     }
 }
