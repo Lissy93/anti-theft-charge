@@ -10,6 +10,9 @@ import com.dx.dxloadingbutton.lib.LoadingButton
 import android.animation.ArgbEvaluator
 import android.animation.ObjectAnimator
 import android.graphics.drawable.ColorDrawable
+import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
+
+
 
 
 
@@ -31,6 +34,8 @@ class MainActivity : AppCompatActivity() {
         toggleButton.setOnClickListener(View.OnClickListener() {
             this.toggleDeviceArming()
         })
+
+        this.showHelpDialog()
     }
 
     /**
@@ -80,5 +85,16 @@ class MainActivity : AppCompatActivity() {
                 mainLayout, "backgroundColor", ArgbEvaluator(), oldBgColor, newBgColor)
         colorFade.duration = bgFadeDuration
         colorFade.start()
+    }
+
+    private fun showHelpDialog(){
+        MaterialStyledDialog.Builder(this)
+                .setTitle("How to Use")
+                .setDescription("Lorem Ipsum dolor sit ammet")
+                .setScrollable(true)
+                .setIcon(R.drawable.icon)
+                .setCancelable(true)
+                .setPositiveText("Got it!")
+                .show()
     }
 }
