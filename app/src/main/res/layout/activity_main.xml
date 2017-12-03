@@ -10,7 +10,7 @@
         android:id="@+id/mainLayout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/colorNeutral"
+        android:background="@color/colorAccent"
         tools:layout_editor_absoluteX="86dp"
         tools:layout_editor_absoluteY="166dp">
 
@@ -23,13 +23,13 @@
             android:layout_marginLeft="50dp"
             android:contentDescription="@string/strToggleDescription"
             android:text="@string/toggleATC"
-            app:lb_btnColor="@color/colorAccent"
+            app:lb_btnColor="@color/colorNeutral"
             app:lb_btnDisabledColor="#cccccc"
             app:lb_btnRippleColor="#000000"
             app:lb_btnText="@string/toggleATC"
             app:lb_disabledTextColor="@color/colorPrimaryDark"
             app:lb_resetAfterFailed="true"
-            app:lb_textColor="@color/colorNeutral" />
+            app:lb_textColor="@color/colorAccent" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

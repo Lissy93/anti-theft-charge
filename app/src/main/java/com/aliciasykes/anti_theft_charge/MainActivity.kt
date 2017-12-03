@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
      * Updates the background color of main layout
      * With a nice fade animation of by default 1 second
      */
-    private fun updateBackgroundColor( newBgColorId: Int = R.color.colorNeutral){
+    private fun updateBackgroundColor( newBgColorId: Int = R.color.colorAccent){
         val mainLayout = findViewById<View>(R.id.mainLayout)
         val bgFadeDuration: Long = 1000
         val newBgColor = ContextCompat.getColor(this, newBgColorId)
