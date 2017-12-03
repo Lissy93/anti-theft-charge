@@ -14,6 +14,7 @@ import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
 import android.view.Menu
 import android.view.MenuItem
 import android.content.SharedPreferences
+import android.os.SystemClock
 import android.widget.TextView
 import android.view.ViewGroup
 import com.transitionseverywhere.*
@@ -23,8 +24,9 @@ class MainActivity : AppCompatActivity() {
 
     private var armed: Boolean = false // Is the device armed?
     private var prefrences: SharedPreferences? = null // Reference to SharedPreferences
-
     private lateinit var toggleButton: LoadingButton // Reference to the main toggle button
+    private var toggleLastClickTime: Long = 0 // Used to ensure user doesn't accidentally double tap on arm
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +38,11 @@ class MainActivity : AppCompatActivity() {
         /* Get the main toggle button, and call stuff when it is pressed */
         toggleButton = findViewById<View>(R.id.toggleButton) as LoadingButton
         toggleButton.setOnClickListener(View.OnClickListener() {
-            toggleDeviceArming()
+            /* Check that not an accidental double-tap, then toggle arm status */
+            if (SystemClock.elapsedRealtime() - toggleLastClickTime > 1000){
+                toggleLastClickTime = SystemClock.elapsedRealtime()
+                toggleDeviceArming()
+            }
         })
 
         /* Put app into correct (armed/disarmed) state */
