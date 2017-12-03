@@ -11,13 +11,8 @@ import android.animation.ArgbEvaluator
 import android.animation.ObjectAnimator
 import android.graphics.drawable.ColorDrawable
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
-
-
-
-
-
-
-
+import android.view.Menu
+import android.view.MenuItem
 
 
 class MainActivity : AppCompatActivity() {
@@ -36,6 +31,15 @@ class MainActivity : AppCompatActivity() {
         })
 
         this.showHelpDialog()
+    }
+
+    /**
+     * Inflate the options menu
+     */
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.options_menu, menu)
+        return true
     }
 
     /**
@@ -87,6 +91,9 @@ class MainActivity : AppCompatActivity() {
         colorFade.start()
     }
 
+    /**
+     * Displays the "How to Use" dialog
+     */
     private fun showHelpDialog(){
         MaterialStyledDialog.Builder(this)
                 .setTitle("How to Use")
@@ -96,5 +103,30 @@ class MainActivity : AppCompatActivity() {
                 .setCancelable(true)
                 .setPositiveText("Got it!")
                 .show()
+    }
+
+    /**
+     * Specify functionality for each menu item
+     */
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            R.id.menu_arm_disarm -> {
+                this.toggleDeviceArming()
+                return true
+            }
+            R.id.menu_help -> {
+                this.showHelpDialog()
+                return true
+            }
+            R.id.menu_bug -> {
+                // todo
+                return true
+            }
+            R.id.menu_about -> {
+                // todo
+                return true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
     }
 }
