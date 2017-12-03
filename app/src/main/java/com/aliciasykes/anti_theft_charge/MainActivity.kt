@@ -14,13 +14,16 @@ import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
 import android.view.Menu
 import android.view.MenuItem
 import android.content.SharedPreferences
+import android.widget.TextView
 
 
 class MainActivity : AppCompatActivity() {
 
     private var armed: Boolean = false // Is the device armed?
     private var prefrences: SharedPreferences? = null // Reference to SharedPreferences
+
     private lateinit var toggleButton: LoadingButton // Reference to the main toggle button
+    private lateinit var statusLabel: TextView // Reference to the status label
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +38,13 @@ class MainActivity : AppCompatActivity() {
         toggleButton.setOnClickListener(View.OnClickListener() {
             toggleDeviceArming()
         })
+
+        /* Set reference to the status label */
+        statusLabel = findViewById(R.id.status_label)
+
+        /* Put app into correct (armed/disarmed) state */
+        //todo check state
+        disarmDevice()
     }
 
     override fun onResume() {
@@ -71,7 +81,8 @@ class MainActivity : AppCompatActivity() {
         toggleButton.startLoading()
         Handler().postDelayed({
             toggleButton.loadingSuccessful()
-            updateBackgroundColor(R.color.colorSafe)
+            updateBackgroundColor(R.color.colorSafe) // Set bg color
+            statusLabel.text = getString(R.string.status_label_armed) // set label text
         }, 500)
         armed = true
     }
@@ -83,6 +94,7 @@ class MainActivity : AppCompatActivity() {
     private fun disarmDevice(){
         toggleButton.reset()
         updateBackgroundColor()
+        statusLabel.text = getString(R.string.status_label_unarmed)
         armed = false
     }
 

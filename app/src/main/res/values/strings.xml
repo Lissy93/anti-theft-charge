@@ -6,4 +6,7 @@
     <string name="how_to_use">How to Use</string>
     <string name="report_a_bug">Report a Bug</string>
     <string name="about">About</string>
+    <string name="status_label">Status:</string>
+    <string name="status_label_armed">Status: Armed</string>
+    <string name="status_label_unarmed">Status: Ready, Unarmed</string>
 </resources>

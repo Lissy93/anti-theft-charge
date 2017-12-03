@@ -20,7 +20,7 @@
             android:layout_height="120dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="25dp"
             android:contentDescription="@string/strToggleDescription"
             android:text="@string/toggleATC"
             app:lb_btnColor="@color/colorNeutral"
@@ -30,6 +30,16 @@
             app:lb_disabledTextColor="@color/colorPrimaryDark"
             app:lb_resetAfterFailed="true"
             app:lb_textColor="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/status_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toggleButton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/status_label"
+            android:textSize="18sp" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
