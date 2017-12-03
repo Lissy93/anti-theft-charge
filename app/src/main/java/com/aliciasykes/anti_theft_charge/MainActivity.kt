@@ -13,24 +13,38 @@ import android.graphics.drawable.ColorDrawable
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
 import android.view.Menu
 import android.view.MenuItem
+import android.content.SharedPreferences
 
 
 class MainActivity : AppCompatActivity() {
 
-    private var armed: Boolean = false
-    private lateinit var toggleButton: LoadingButton
+    private var armed: Boolean = false // Is the device armed?
+    private var prefrences: SharedPreferences? = null // Reference to SharedPreferences
+    private lateinit var toggleButton: LoadingButton // Reference to the main toggle button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        /* Load app preferences */
+        prefrences = getSharedPreferences("com.aliciasykes.anti_theft_charge", MODE_PRIVATE)
+
         /* Get the main toggle button, and call stuff when it is pressed */
         toggleButton = findViewById<View>(R.id.toggleButton) as LoadingButton
         toggleButton.setOnClickListener(View.OnClickListener() {
-            this.toggleDeviceArming()
+            toggleDeviceArming()
         })
+    }
 
-        this.showHelpDialog()
+    override fun onResume() {
+        super.onResume()
+
+        /* If this is the first time user has fun the app- show help dialog */
+        if (!prefrences!!.contains("firstRun")) {
+            showHelpDialog()
+            prefrences!!.edit().putBoolean("firstRun", false).apply()
+        }
     }
 
     /**
@@ -46,7 +60,7 @@ class MainActivity : AppCompatActivity() {
      * Calls to arm the device if it is disarmed, and disarms if armed
      */
     private fun toggleDeviceArming(){
-        if (this.armed) this.disarmDevice() else this.armDevice()
+        if (armed) disarmDevice() else armDevice()
     }
 
     /**
@@ -57,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         toggleButton.startLoading()
         Handler().postDelayed({
             toggleButton.loadingSuccessful()
-            this.updateBackgroundColor(R.color.colorSafe)
+            updateBackgroundColor(R.color.colorSafe)
         }, 500)
         armed = true
     }
@@ -68,7 +82,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun disarmDevice(){
         toggleButton.reset()
-        this.updateBackgroundColor()
+        updateBackgroundColor()
         armed = false
     }
 
@@ -111,11 +125,11 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.getItemId()) {
             R.id.menu_arm_disarm -> {
-                this.toggleDeviceArming()
+                toggleDeviceArming()
                 return true
             }
             R.id.menu_help -> {
-                this.showHelpDialog()
+                showHelpDialog()
                 return true
             }
             R.id.menu_bug -> {
