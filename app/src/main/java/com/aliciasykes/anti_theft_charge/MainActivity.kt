@@ -15,6 +15,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.content.SharedPreferences
 import android.widget.TextView
+import android.view.ViewGroup
+import com.transitionseverywhere.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,8 +25,6 @@ class MainActivity : AppCompatActivity() {
     private var prefrences: SharedPreferences? = null // Reference to SharedPreferences
 
     private lateinit var toggleButton: LoadingButton // Reference to the main toggle button
-    private lateinit var statusLabel: TextView // Reference to the status label
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,9 +38,6 @@ class MainActivity : AppCompatActivity() {
         toggleButton.setOnClickListener(View.OnClickListener() {
             toggleDeviceArming()
         })
-
-        /* Set reference to the status label */
-        statusLabel = findViewById(R.id.status_label)
 
         /* Put app into correct (armed/disarmed) state */
         //todo check state
@@ -82,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         Handler().postDelayed({
             toggleButton.loadingSuccessful()
             updateBackgroundColor(R.color.colorSafe) // Set bg color
-            statusLabel.text = getString(R.string.status_label_armed) // set label text
+            updateStatusLabel(getString(R.string.status_label_armed)) // Update status text
         }, 500)
         armed = true
     }
@@ -94,7 +91,7 @@ class MainActivity : AppCompatActivity() {
     private fun disarmDevice(){
         toggleButton.reset()
         updateBackgroundColor()
-        statusLabel.text = getString(R.string.status_label_unarmed)
+        updateStatusLabel(getString(R.string.status_label_unarmed))
         armed = false
     }
 
@@ -115,6 +112,27 @@ class MainActivity : AppCompatActivity() {
                 mainLayout, "backgroundColor", ArgbEvaluator(), oldBgColor, newBgColor)
         colorFade.duration = bgFadeDuration
         colorFade.start()
+    }
+
+    /**
+     * Updates the status label, to make it clear if the device is armed or not
+     * Uses a nice animation, thanks to @andkulikov for creating Transitions-Everywhere
+     */
+    private fun updateStatusLabel(newTextValue: String = ""){
+
+        /* Get reference to the status label */
+        val statusLabel: TextView = findViewById(R.id.status_label)
+        val transitionsContainer = findViewById<ViewGroup>(R.id.mainLayout)
+
+        /* Set up the animation configuration */
+        TransitionManager.beginDelayedTransition(
+                transitionsContainer,
+                ChangeText()
+                    .setChangeBehavior(ChangeText.CHANGE_BEHAVIOR_OUT_IN)
+                    .setDuration(500))
+
+        /* Update text*/
+        statusLabel.text = newTextValue
     }
 
     /**
