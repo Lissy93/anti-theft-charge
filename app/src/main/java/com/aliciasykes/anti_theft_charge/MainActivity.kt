@@ -15,15 +15,20 @@ import android.view.Menu
 import android.view.MenuItem
 import android.content.SharedPreferences
 import android.os.SystemClock
+import android.support.design.widget.Snackbar
 import android.widget.TextView
 import android.view.ViewGroup
 import com.transitionseverywhere.*
+
+
 
 
 class MainActivity : AppCompatActivity() {
 
     private var armed: Boolean = false // Is the device armed?
     private var prefrences: SharedPreferences? = null // Reference to SharedPreferences
+    private val chargingUtil: ChargingUtil = ChargingUtil()
+
     private lateinit var toggleButton: LoadingButton // Reference to the main toggle button
     private var toggleLastClickTime: Long = 0 // Used to ensure user doesn't accidentally double tap on arm
 
@@ -81,13 +86,18 @@ class MainActivity : AppCompatActivity() {
      * Updates UI and calls appropriate methods
      */
     private fun armDevice(){
-        toggleButton.startLoading()
-        Handler().postDelayed({
-            toggleButton.loadingSuccessful()
-            updateBackgroundColor(R.color.colorSafe) // Set bg color
-            updateStatusLabel(getString(R.string.status_label_armed)) // Update status text
-        }, 500)
-        armed = true
+        if(!chargingUtil.isConnected(applicationContext)){ // NOT charging, show message and exit func
+            showSnackMessage("Plug device in first")
+        }
+        else{ // Device is charging! So proceed to arming
+            toggleButton.startLoading()
+            Handler().postDelayed({
+                toggleButton.loadingSuccessful()
+                updateBackgroundColor(R.color.colorSafe) // Set bg color
+                updateStatusLabel(getString(R.string.status_label_armed)) // Update status text
+            }, 500)
+            armed = true
+        }
     }
 
     /**
@@ -152,6 +162,13 @@ class MainActivity : AppCompatActivity() {
                 .setIcon(R.drawable.icon)
                 .setCancelable(true)
                 .setPositiveText("Got it!")
+                .show()
+    }
+
+    private fun showSnackMessage(message: String){
+        val mainLayout = findViewById<View>(R.id.mainLayout)
+        Snackbar.make(mainLayout, message, Snackbar.LENGTH_LONG)
+                .setAction("CLOSE", View.OnClickListener { })
                 .show()
     }
 
