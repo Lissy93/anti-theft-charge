@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
      */
     private fun armDevice(){
         if(!chargingUtil.isConnected(applicationContext)){ // NOT charging, show message and exit func
-            showSnackMessage("Plug device in first")
+            showSnackMessage("Plug device in first", " Explain More ", ::showHelpDialog)
         }
         else{ // Device is charging! So proceed to arming
             toggleButton.startLoading()
@@ -165,10 +165,15 @@ class MainActivity : AppCompatActivity() {
                 .show()
     }
 
-    private fun showSnackMessage(message: String){
+    /**
+     * Displays the SnackBar at the bottom of the main layout with specified text
+     * Optionally, also specify button text and function to execute on tap
+     */
+    private fun showSnackMessage(message: String,
+                                 buttonText: String = "",  buttonFunction: () -> Unit = fun (){}){
         val mainLayout = findViewById<View>(R.id.mainLayout)
         Snackbar.make(mainLayout, message, Snackbar.LENGTH_LONG)
-                .setAction("CLOSE", View.OnClickListener { })
+                .setAction(buttonText, View.OnClickListener { buttonFunction() })
                 .show()
     }
 
