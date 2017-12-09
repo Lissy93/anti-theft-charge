@@ -7,6 +7,9 @@
     <string name="report_a_bug">Report a Bug</string>
     <string name="about">About</string>
     <string name="status_label">Status:</string>
-    <string name="status_label_armed">Status: Armed</string>
-    <string name="status_label_unarmed">Status: Ready, Unarmed</string>
+    <string name="status_label_prefix">Status: </string>
+    <string name="status_label_charging">Charging, Ready</string>
+    <string name="status_label_not_charging">Not Charging, Connect Device First</string>
+    <string name="status_label_unarmed">Unarmed</string>
+    <string name="status_label_armed">Armed</string>
 </resources>

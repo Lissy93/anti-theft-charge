@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
             Handler().postDelayed({
                 toggleButton.loadingSuccessful()
                 updateBackgroundColor(R.color.colorSafe) // Set bg color
-                updateStatusLabel(getString(R.string.status_label_armed)) // Update status text
+                updateStatusLabel(makeStatusLabelText(true)) // Update status text
             }, 500)
             armed = true
         }
@@ -107,8 +107,25 @@ class MainActivity : AppCompatActivity() {
     private fun disarmDevice(){
         toggleButton.reset()
         updateBackgroundColor()
-        updateStatusLabel(getString(R.string.status_label_unarmed))
+        updateStatusLabel(makeStatusLabelText(false))
         armed = false
+    }
+
+    private fun makeStatusLabelText( armed: Boolean = false ): String {
+        if (armed){
+            return getString(R.string.status_label_armed)
+        }
+        else {
+            return getString(
+                if (chargingUtil.isConnected(applicationContext))
+                    R.string.status_label_charging
+                else R.string.status_label_not_charging
+                ) +
+                "\n" +
+                getString(R.string.status_label_prefix) +
+                " " +
+                getString(R.string.status_label_unarmed)
+        }
     }
 
     /**
