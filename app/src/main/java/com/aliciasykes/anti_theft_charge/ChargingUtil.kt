@@ -24,17 +24,20 @@ class ChargingUtil{
         val plugged = intent!!.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1)
         return plugged == BatteryManager.BATTERY_PLUGGED_AC || plugged == BatteryManager.BATTERY_PLUGGED_USB
     }
-}
 
 
-class PlugInControlReceiver : BroadcastReceiver() {
-    override fun onReceive(context: Context, intent: Intent) {
-        val action = intent.action
-
-        if (action == Intent.ACTION_POWER_CONNECTED) {
-            // Do something when power connected
-        } else if (action == Intent.ACTION_POWER_DISCONNECTED) {
-            // Do something when power disconnected
+    class PlugInReceiver : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val action = intent.action
+            if (action == Intent.ACTION_POWER_CONNECTED) {
+                System.out.println("Conected.")
+                // Do something when power connected
+            } else if (action == Intent.ACTION_POWER_DISCONNECTED) {
+                System.out.println("Disconnected.")
+                // Do something when power disconnected
+            }
         }
     }
 }
+
+
