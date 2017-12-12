@@ -1,47 +1,32 @@
 package com.aliciasykes.anti_theft_charge
 
-import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.support.v4.content.ContextCompat
 import android.view.View
 import com.dx.dxloadingbutton.lib.LoadingButton
-import android.animation.ArgbEvaluator
-import android.animation.ObjectAnimator
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.graphics.drawable.ColorDrawable
-import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
 import android.view.Menu
 import android.view.MenuItem
 import android.content.SharedPreferences
 import android.os.SystemClock
-import android.support.design.widget.Snackbar
-import android.widget.TextView
-import android.view.ViewGroup
-import com.transitionseverywhere.*
-
-
-
 
 class MainActivity : AppCompatActivity() {
 
-    private var armed: Boolean = false // Is the device armed?
     private var prefrences: SharedPreferences? = null // Reference to SharedPreferences
-    private val chargingUtil: ChargingUtil = ChargingUtil()
 
     private lateinit var toggleButton: LoadingButton // Reference to the main toggle button
     private var toggleLastClickTime: Long = 0 // Used to ensure user doesn't accidentally double tap on arm
 
     private lateinit var armDisarmFunctionality: ArmDisarmFunctionality
+    private lateinit var chargingUtil: ChargingUtil
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         armDisarmFunctionality = ArmDisarmFunctionality(this)
+        chargingUtil = ChargingUtil(armDisarmFunctionality)
+
 
         /* Load app preferences */
         prefrences = getSharedPreferences("com.aliciasykes.anti_theft_charge", MODE_PRIVATE)
@@ -106,16 +91,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-//    val plugInReceiver = object : BroadcastReceiver() {
-//
-//    override fun onReceive(context: Context, intent: Intent) {
-//            val action = intent.action
-//
-//            if (action == Intent.ACTION_POWER_CONNECTED) {
-//                // Do something when power connected
-//            } else if (action == Intent.ACTION_POWER_DISCONNECTED) {
-//                // Do something when power disconnected
-//            }
-//        }
-//    }
 }

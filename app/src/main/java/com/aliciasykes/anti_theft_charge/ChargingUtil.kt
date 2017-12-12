@@ -6,13 +6,12 @@ import android.content.IntentFilter
 import android.os.BatteryManager
 import android.content.BroadcastReceiver
 
+class ChargingUtil(_armDisarmFunctionality: ArmDisarmFunctionality) {
+
+    private var armDisarmFunctionality: ArmDisarmFunctionality = _armDisarmFunctionality
 
 
-/**
- * Created by Alicia on 04/12/2017.
- */
-
-class ChargingUtil{
+        private var connected: Boolean = false
 
     /**
      * Determines wheather the device is currently plugged-in

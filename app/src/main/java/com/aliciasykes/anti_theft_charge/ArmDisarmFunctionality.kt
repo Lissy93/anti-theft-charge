@@ -15,25 +15,18 @@ import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
 import com.transitionseverywhere.ChangeText
 import com.transitionseverywhere.TransitionManager
 
-class ArmDisarmFunctionality {
+class ArmDisarmFunctionality(_mainActivity: MainActivity) {
 
-    private lateinit var toggleButton: LoadingButton
-    private lateinit var mainActivity: MainActivity
-
-
-    constructor(_mainActivity: MainActivity){
-        mainActivity = _mainActivity
-        toggleButton = mainActivity.findViewById<View>(R.id.toggleButton) as LoadingButton
-    }
-
+    private var toggleButton: LoadingButton
+    private var mainActivity: MainActivity = _mainActivity
     private var armed: Boolean = false
-    private var chargingUtil: ChargingUtil = ChargingUtil()
+    private var chargingUtil: ChargingUtil = ChargingUtil(this)
 
 
     /**
      * Calls to arm the device if it is disarmed, and disarms if armed
      */
-    public fun toggleDeviceArming(){
+    fun toggleDeviceArming(){
         if (armed) disarmDevice() else armDevice()
     }
 
@@ -41,7 +34,7 @@ class ArmDisarmFunctionality {
      * Arms the device
      * Updates UI and calls appropriate methods
      */
-    public fun armDevice(){
+    private fun armDevice(){
         if(!chargingUtil.isConnected(mainActivity.applicationContext)){ // NOT charging, show message and exit func
             showSnackMessage("Plug device in first", " Explain More ", ::showHelpDialog)
         }
@@ -148,6 +141,10 @@ class ArmDisarmFunctionality {
         Snackbar.make(mainLayout, message, Snackbar.LENGTH_LONG)
                 .setAction(buttonText, View.OnClickListener { buttonFunction() })
                 .show()
+    }
+
+    init {
+        toggleButton = mainActivity.findViewById<View>(R.id.toggleButton) as LoadingButton
     }
 
 }
