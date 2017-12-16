@@ -15,13 +15,11 @@ import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
 import com.transitionseverywhere.ChangeText
 import com.transitionseverywhere.TransitionManager
 
-class ArmDisarmFunctionality(_mainActivity: MainActivity) {
+class ArmDisarmFunctionality(_mainActivity: MainActivity): ConnectionChangedListener {
 
     private var toggleButton: LoadingButton
     private var mainActivity: MainActivity = _mainActivity
     private var armed: Boolean = false
-    private var chargingUtil: ChargingUtil = ChargingUtil(this)
-
 
     /**
      * Calls to arm the device if it is disarmed, and disarms if armed
@@ -35,7 +33,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
      * Updates UI and calls appropriate methods
      */
     private fun armDevice(){
-        if(!chargingUtil.isConnected(mainActivity.applicationContext)){ // NOT charging, show message and exit func
+        if(!CurrentStatus.isConnected){ // NOT charging, show message and exit func
             showSnackMessage("Plug device in first", " Explain More ", ::showHelpDialog)
         }
         else{ // Device is charging! So proceed to arming
@@ -66,7 +64,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
         }
         else {
             return mainActivity.getString(
-                    if (chargingUtil.isConnected(mainActivity.applicationContext))
+                    if (CurrentStatus.isConnected)
                         R.string.status_label_charging
                     else R.string.status_label_not_charging
             ) +
@@ -146,5 +144,10 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
     init {
         toggleButton = mainActivity.findViewById<View>(R.id.toggleButton) as LoadingButton
     }
+
+    override fun onConnectionChanged(connected: Boolean){
+        System.out.println("Text is changed to: $connected")
+    }
+
 
 }

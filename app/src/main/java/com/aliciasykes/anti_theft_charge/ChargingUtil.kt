@@ -10,9 +10,6 @@ class ChargingUtil(_armDisarmFunctionality: ArmDisarmFunctionality) {
 
     private var armDisarmFunctionality: ArmDisarmFunctionality = _armDisarmFunctionality
 
-
-        private var connected: Boolean = false
-
     /**
      * Determines wheather the device is currently plugged-in
      * @param context
@@ -21,19 +18,19 @@ class ChargingUtil(_armDisarmFunctionality: ArmDisarmFunctionality) {
     fun isConnected(context: Context): Boolean {
         val intent = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
         val plugged = intent!!.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1)
-        return plugged == BatteryManager.BATTERY_PLUGGED_AC || plugged == BatteryManager.BATTERY_PLUGGED_USB
+        CurrentStatus.isConnected = plugged == BatteryManager.BATTERY_PLUGGED_AC || plugged == BatteryManager.BATTERY_PLUGGED_USB
+        return CurrentStatus.isConnected
     }
 
-
     class PlugInReceiver : BroadcastReceiver() {
+
         override fun onReceive(context: Context, intent: Intent) {
             val action = intent.action
             if (action == Intent.ACTION_POWER_CONNECTED) {
-                System.out.println("Conected.")
-                // Do something when power connected
+                CurrentStatus.isConnected = true
             } else if (action == Intent.ACTION_POWER_DISCONNECTED) {
                 System.out.println("Disconnected.")
-                // Do something when power disconnected
+                CurrentStatus.isConnected = false
             }
         }
     }
