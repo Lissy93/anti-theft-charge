@@ -15,17 +15,37 @@ import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
 import com.transitionseverywhere.ChangeText
 import com.transitionseverywhere.TransitionManager
 
-class ArmDisarmFunctionality(_mainActivity: MainActivity): ConnectionChangedListener {
+class ArmDisarmFunctionality(_mainActivity: MainActivity) {
 
     private var toggleButton: LoadingButton
     private var mainActivity: MainActivity = _mainActivity
     private var armed: Boolean = false
+
+    init {
+        toggleButton = mainActivity.findViewById<View>(R.id.toggleButton) as LoadingButton
+    }
 
     /**
      * Calls to arm the device if it is disarmed, and disarms if armed
      */
     fun toggleDeviceArming(){
         if (armed) disarmDevice() else armDevice()
+    }
+
+    /**
+     * Called by the event emitter when the power is disconnected
+     * Determins what state the device is in, and takes appropriate action
+     */
+    fun powerDisconnected(){
+        // TODO
+    }
+
+    /**
+     * Called when the power cable is reconnected
+     * Calls to update the UI accordingly
+     */
+    fun powerConnected(){
+        // TODO
     }
 
     /**
@@ -51,19 +71,23 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity): ConnectionChangedList
      * (you guessed it!) Disarms the device
      * Also resetting the UI and removing listener
      */
-    public fun disarmDevice(){
+    fun disarmDevice(){
         toggleButton.reset()
         updateBackgroundColor()
         updateStatusLabel(makeStatusLabelText(false))
         armed = false
     }
 
+    /**
+     * Returns a string, which will then be used as the label below button
+     * Takes an optional param of armed
+     */
     private fun makeStatusLabelText( armed: Boolean = false ): String {
-        if (armed){
-            return mainActivity.getString(R.string.status_label_armed)
+        return if (armed){
+            mainActivity.getString(R.string.status_label_armed)
         }
         else {
-            return mainActivity.getString(
+            mainActivity.getString(
                     if (CurrentStatus.isConnected)
                         R.string.status_label_charging
                     else R.string.status_label_not_charging
@@ -118,7 +142,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity): ConnectionChangedList
     /**
      * Displays the "How to Use" dialog
      */
-    public fun showHelpDialog(){
+    fun showHelpDialog(){
         MaterialStyledDialog.Builder(mainActivity)
                 .setTitle("How to Use")
                 .setDescription("Lorem Ipsum dolor sit ammet")
@@ -141,13 +165,6 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity): ConnectionChangedList
                 .show()
     }
 
-    init {
-        toggleButton = mainActivity.findViewById<View>(R.id.toggleButton) as LoadingButton
-    }
-
-    override fun onConnectionChanged(connected: Boolean){
-        System.out.println("Text is changed to: $connected")
-    }
 
 
 }

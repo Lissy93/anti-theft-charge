@@ -25,7 +25,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         armDisarmFunctionality = ArmDisarmFunctionality(this)
-        chargingUtil = ChargingUtil(armDisarmFunctionality)
+        CurrentStatus.armDisarmFunctionality = armDisarmFunctionality
+        chargingUtil = ChargingUtil()
 
 
         /* Load app preferences */

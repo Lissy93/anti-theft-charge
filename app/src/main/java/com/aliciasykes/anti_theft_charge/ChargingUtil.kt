@@ -6,9 +6,7 @@ import android.content.IntentFilter
 import android.os.BatteryManager
 import android.content.BroadcastReceiver
 
-class ChargingUtil(_armDisarmFunctionality: ArmDisarmFunctionality) {
-
-    private var armDisarmFunctionality: ArmDisarmFunctionality = _armDisarmFunctionality
+class ChargingUtil {
 
     /**
      * Determines wheather the device is currently plugged-in
@@ -24,16 +22,23 @@ class ChargingUtil(_armDisarmFunctionality: ArmDisarmFunctionality) {
 
     class PlugInReceiver : BroadcastReceiver() {
 
+        /**
+         * Called when BroadcastReceiver emits a power connected or disconnected change
+         * Updates static powerConnected reference and calls to update the UI
+         */
         override fun onReceive(context: Context, intent: Intent) {
-            val action = intent.action
-            if (action == Intent.ACTION_POWER_CONNECTED) {
+            if (intent.action == Intent.ACTION_POWER_CONNECTED) {
                 CurrentStatus.isConnected = true
-            } else if (action == Intent.ACTION_POWER_DISCONNECTED) {
-                System.out.println("Disconnected.")
+                CurrentStatus.armDisarmFunctionality.powerConnected()
+            }
+            else if (intent.action == Intent.ACTION_POWER_DISCONNECTED) {
                 CurrentStatus.isConnected = false
+                CurrentStatus.armDisarmFunctionality.powerDisconnected()
             }
         }
     }
+
+
 }
 
 
