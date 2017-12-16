@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         /* Get the main toggle button, and call stuff when it is pressed */
         toggleButton = findViewById<View>(R.id.toggleButton) as LoadingButton
-        toggleButton.setOnClickListener(View.OnClickListener() {
+        toggleButton.setOnClickListener({
             /* Check that not an accidental double-tap, then toggle arm status */
             if (SystemClock.elapsedRealtime() - toggleLastClickTime > 1000){
                 toggleLastClickTime = SystemClock.elapsedRealtime()
@@ -46,8 +46,8 @@ class MainActivity : AppCompatActivity() {
         else armDisarmFunctionality.powerDisconnected()
 
         /* Put app into correct (armed/disarmed) state */
-        //todo check state
-        armDisarmFunctionality.disarmDevice()
+        if(CurrentStatus.isArmed) armDisarmFunctionality.armDevice()
+        else armDisarmFunctionality.disarmDevice()
     }
 
     override fun onResume() {

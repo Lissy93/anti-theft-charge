@@ -19,7 +19,6 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
 
     private var toggleButton: LoadingButton
     private var mainActivity: MainActivity = _mainActivity
-    private var armed: Boolean = false
 
     init {
         toggleButton = mainActivity.findViewById<View>(R.id.toggleButton) as LoadingButton
@@ -29,7 +28,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
      * Calls to arm the device if it is disarmed, and disarms if armed
      */
     fun toggleDeviceArming(){
-        if (armed) disarmDevice() else armDevice()
+        if (CurrentStatus.isArmed) disarmDevice() else armDevice()
     }
 
     /**
@@ -52,7 +51,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
      * Arms the device
      * Updates UI and calls appropriate methods
      */
-    private fun armDevice(){
+    fun armDevice(){
         if(!CurrentStatus.isConnected){ // NOT charging, show message and exit func
             showSnackMessage("Plug device in first", " Explain More ", ::showHelpDialog)
         }
@@ -63,7 +62,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
                 updateBackgroundColor(R.color.colorSafe) // Set bg color
                 updateStatusLabel(makeStatusLabelText(true)) // Update status text
             }, 500)
-            armed = true
+            CurrentStatus.isArmed = true
         }
     }
 
@@ -75,7 +74,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
         toggleButton.reset()
         updateBackgroundColor()
         updateStatusLabel(makeStatusLabelText(false))
-        armed = false
+        CurrentStatus.isArmed = false
     }
 
     /**
