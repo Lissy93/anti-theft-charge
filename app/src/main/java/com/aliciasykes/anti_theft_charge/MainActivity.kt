@@ -19,14 +19,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var armDisarmFunctionality: ArmDisarmFunctionality
     private lateinit var chargingUtil: ChargingUtil
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         armDisarmFunctionality = ArmDisarmFunctionality(this)
         CurrentStatus.armDisarmFunctionality = armDisarmFunctionality
-        chargingUtil = ChargingUtil()
+        chargingUtil = ChargingUtil(applicationContext)
 
 
         /* Load app preferences */
@@ -41,6 +40,10 @@ class MainActivity : AppCompatActivity() {
                 armDisarmFunctionality.toggleDeviceArming()
             }
         })
+
+        /* Is device plugged in? */
+        if(CurrentStatus.isConnected) armDisarmFunctionality.powerConnected()
+        else armDisarmFunctionality.powerDisconnected()
 
         /* Put app into correct (armed/disarmed) state */
         //todo check state
