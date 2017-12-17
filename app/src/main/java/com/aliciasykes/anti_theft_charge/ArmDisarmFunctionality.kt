@@ -36,7 +36,10 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
      * Determins what state the device is in, and takes appropriate action
      */
     fun powerDisconnected(){
-        // TODO
+        updateStatusLabel(makeStatusLabelText(CurrentStatus.isArmed))
+        if(!CurrentStatus.isArmed) {
+            updateBackgroundColor(R.color.colorNeutral)
+        }
     }
 
     /**
@@ -44,7 +47,10 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
      * Calls to update the UI accordingly
      */
     fun powerConnected(){
-        // TODO
+        updateStatusLabel(makeStatusLabelText(CurrentStatus.isArmed))
+        if (!CurrentStatus.isArmed){
+            updateBackgroundColor(R.color.colorAccent) // Set bg color
+        }
     }
 
     /**
@@ -72,7 +78,8 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
      */
     fun disarmDevice(){
         toggleButton.reset()
-        updateBackgroundColor()
+        val bgCol = if (CurrentStatus.isConnected) R.color.colorAccent else R.color.colorNeutral
+        updateBackgroundColor(bgCol)
         updateStatusLabel(makeStatusLabelText(false))
         CurrentStatus.isArmed = false
     }

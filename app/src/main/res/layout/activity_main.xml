@@ -23,11 +23,11 @@
             android:layout_marginLeft="25dp"
             android:contentDescription="@string/strToggleDescription"
             android:text="@string/toggleATC"
-            app:lb_btnColor="@color/colorNeutral"
+            app:lb_btnColor="@color/colorPrimary"
             app:lb_btnDisabledColor="#cccccc"
             app:lb_btnRippleColor="#000000"
             app:lb_btnText="@string/toggleATC"
-            app:lb_disabledTextColor="@color/colorPrimaryDark"
+            app:lb_disabledTextColor="@color/colorPrimary"
             app:lb_resetAfterFailed="true"
             app:lb_textColor="@color/colorAccent" />
 
@@ -35,11 +35,11 @@
             android:id="@+id/status_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:lineSpacingMultiplier="1.5"
             android:layout_below="@+id/toggleButton"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="11dp"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.5"
             android:text="@string/status_label"
             android:textSize="18sp" />
     </RelativeLayout>
