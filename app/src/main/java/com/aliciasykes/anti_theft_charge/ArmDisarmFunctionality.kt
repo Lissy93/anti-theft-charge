@@ -122,6 +122,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
                 mainLayout, "backgroundColor", ArgbEvaluator(), oldBgColor, newBgColor)
         colorFade.duration = bgFadeDuration
         colorFade.start()
+        toggleButton.setTextColor(newBgColor) // Button text always the same as background color
     }
 
     /**

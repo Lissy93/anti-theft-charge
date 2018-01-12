@@ -31,7 +31,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile 'com.android.support:design:22.2.0'
-    compile 'com.github.StevenDXC:DxLoadingButton:1.9'
+    compile 'com.github.StevenDXC:DxLoadingButton:2.0'
     compile 'com.github.javiersantos:MaterialStyledDialogs:2.1'
     compile 'com.andkulikov:transitionseverywhere:1.7.8'
 }
