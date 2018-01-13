@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
                 armDisarmFunctionality.toggleDeviceArming()
             }
         })
+        toggleButton.setTextSize(26) // Unfortunately this has to be done programmatically...
 
         /* Is device plugged in? */
         if(CurrentStatus.isConnected) armDisarmFunctionality.powerConnected()
