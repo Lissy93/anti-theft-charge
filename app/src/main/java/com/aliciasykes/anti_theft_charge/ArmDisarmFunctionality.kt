@@ -36,8 +36,11 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
      * Determins what state the device is in, and takes appropriate action
      */
     fun powerDisconnected(){
-        updateStatusLabel(makeStatusLabelText(CurrentStatus.isArmed))
-        if(!CurrentStatus.isArmed) {
+        if(CurrentStatus.isArmed){ // Armed device has just been disconnected
+            deviceIsUnderAttack()
+        }
+        else{ // Unarmed when disconnected, put back into ready state
+            updateStatusLabel(makeStatusLabelText(false))
             updateBackgroundColor(R.color.colorNeutral)
         }
     }
@@ -84,6 +87,18 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
         CurrentStatus.isArmed = false
     }
 
+    private fun deviceIsUnderAttack() {
+        toggleButton.reset()
+//        updateStatusLabel("Device under Attack. Unlock with your pass code, then tap 'dismiss'")
+//        updateBackgroundColor(R.color.colorNearlyDanger)
+//
+//        Handler().postDelayed({
+//            toggleButton.loadingFailed()
+//            updateBackgroundColor(R.color.colorDanger)
+//            updateStatusLabel("Device under Attack. Unlock with your pass code, then tap 'dismiss'")
+//        }, 2500)
+    }
+
     /**
      * Returns a string, which will then be used as the label below button
      * Takes an optional param of armed
@@ -109,14 +124,18 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
      * Updates the background color of main layout
      * With a nice fade animation of by default 1 second
      */
-    private fun updateBackgroundColor( newBgColorId: Int = R.color.colorAccent){
+    private fun updateBackgroundColor( newBgColorId: Int = R.color.colorAccent, oldBgColorId: Int = 0, bgFadeDuration: Long = 1000){
         val mainLayout = mainActivity.findViewById<View>(R.id.mainLayout)
-        val bgFadeDuration: Long = 1000
         val newBgColor = ContextCompat.getColor(mainActivity, newBgColorId)
-        val oldBgColor =
-                if (mainLayout.background is ColorDrawable)
-                    (mainLayout.background as ColorDrawable).color
-                else Color.TRANSPARENT
+
+        val oldBgColor = if (oldBgColorId != 0) {
+            ContextCompat.getColor(mainActivity, newBgColorId)
+        }
+        else {
+            if (mainLayout.background is ColorDrawable)
+                (mainLayout.background as ColorDrawable).color
+            else Color.TRANSPARENT
+        }
 
         val colorFade = ObjectAnimator.ofObject(
                 mainLayout, "backgroundColor", ArgbEvaluator(), oldBgColor, newBgColor)
