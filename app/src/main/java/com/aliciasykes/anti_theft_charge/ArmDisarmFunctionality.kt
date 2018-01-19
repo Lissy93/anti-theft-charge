@@ -87,16 +87,24 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
         CurrentStatus.isArmed = false
     }
 
+    /**
+     * Will be called when device gets unplugged
+     * from power while it is armed and locked
+     * Updates text, changes background and sounds alarm
+     */
     private fun deviceIsUnderAttack() {
         toggleButton.reset()
-//        updateStatusLabel("Device under Attack. Unlock with your pass code, then tap 'dismiss'")
-//        updateBackgroundColor(R.color.colorNearlyDanger)
-//
-//        Handler().postDelayed({
-//            toggleButton.loadingFailed()
-//            updateBackgroundColor(R.color.colorDanger)
-//            updateStatusLabel("Device under Attack. Unlock with your pass code, then tap 'dismiss'")
-//        }, 2500)
+        toggleButton.setText("Dismiss")
+        toggleButton.startLoading()m
+
+        updateBackgroundColor(R.color.colorNearlyDanger)
+        updateStatusLabel("Device under Attack.\n Alarm will sound unless plugged back in or dismissed")
+
+        Handler().postDelayed({
+            toggleButton.loadingFailed()
+            updateBackgroundColor(R.color.colorDanger)
+            updateStatusLabel("Device under Attack. \nUnlock with your pass code, then tap 'dismiss'")
+        }, 2500)
     }
 
     /**
