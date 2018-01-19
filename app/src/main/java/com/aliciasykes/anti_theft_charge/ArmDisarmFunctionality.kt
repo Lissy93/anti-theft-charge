@@ -95,7 +95,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
     private fun deviceIsUnderAttack() {
         toggleButton.reset()
         toggleButton.setText("Dismiss")
-        toggleButton.startLoading()m
+        toggleButton.startLoading()
 
         updateBackgroundColor(R.color.colorNearlyDanger)
         updateStatusLabel("Device under Attack.\n Alarm will sound unless plugged back in or dismissed")
