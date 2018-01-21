@@ -50,9 +50,18 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
      * Calls to update the UI accordingly
      */
     fun powerConnected(){
-        updateStatusLabel(makeStatusLabelText(CurrentStatus.isArmed))
-        if (!CurrentStatus.isArmed){
+
+        if (!CurrentStatus.isArmed){ // Is armed, and now is connected - set green
             updateBackgroundColor(R.color.colorAccent) // Set bg color
+        }
+
+        if(!CurrentStatus.isUnderAttack){ // Not under attack, set home text
+            updateStatusLabel(makeStatusLabelText(CurrentStatus.isArmed))
+        }
+        else{ // Device was under active enemy attack - but power has just been reconnected
+            armDevice()
+            showSnackMessage("Power has been reconnected. Device is still Armed.")
+            deviceNoLongerUnderAttack()
         }
     }
 
@@ -94,9 +103,10 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
      */
     private fun deviceIsUnderAttack() {
 
+        CurrentStatus.isUnderAttack = true
+
         updateBackgroundColor(R.color.colorNearlyDanger)
         updateStatusLabel("Device under Attack.\n Alarm will sound unless plugged back in or dismissed")
-
         toggleButton.reset()
         toggleButton.setText("Dismiss")
 
@@ -108,6 +118,15 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
                 toggleButton.loadingFailed()
             }, 2000)
         }, 2000)
+    }
+
+    /**
+     * Called when the device has either just been secured
+     * or the cable has been reconnected
+     * Will silence the alarm, reset notification
+     */
+    private fun deviceNoLongerUnderAttack() {
+        // todo
     }
 
     /**
