@@ -93,18 +93,21 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
      * Updates text, changes background and sounds alarm
      */
     private fun deviceIsUnderAttack() {
-        toggleButton.reset()
-        toggleButton.setText("Dismiss")
-        toggleButton.startLoading()
 
         updateBackgroundColor(R.color.colorNearlyDanger)
         updateStatusLabel("Device under Attack.\n Alarm will sound unless plugged back in or dismissed")
 
+        toggleButton.reset()
+        toggleButton.setText("Dismiss")
+
         Handler().postDelayed({
-            toggleButton.loadingFailed()
+            toggleButton.startLoading()
             updateBackgroundColor(R.color.colorDanger)
-            updateStatusLabel("Device under Attack. \nUnlock with your pass code, then tap 'dismiss'")
-        }, 2500)
+            updateStatusLabel("Device under Attack. \nUnlock with your pass code, then tap here")
+            Handler().postDelayed({
+                toggleButton.loadingFailed()
+            }, 2000)
+        }, 2000)
     }
 
     /**
