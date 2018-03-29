@@ -40,7 +40,7 @@
             android:layout_marginTop="11dp"
             android:gravity="center"
             android:lineSpacingMultiplier="1.5"
-            android:text="@string/status_label"
+            android:text="@string/status_label_unarmed"
             android:textSize="18sp" />
     </RelativeLayout>
 

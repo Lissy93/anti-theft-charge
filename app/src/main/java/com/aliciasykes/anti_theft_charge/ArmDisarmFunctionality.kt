@@ -36,13 +36,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
      * Determins what state the device is in, and takes appropriate action
      */
     fun powerDisconnected(){
-        if(CurrentStatus.isArmed){ // Armed device has just been disconnected
-            deviceIsUnderAttack()
-        }
-        else{ // Unarmed when disconnected, put back into ready state
-            updateStatusLabel(makeStatusLabelText(false))
-            updateBackgroundColor(R.color.colorNeutral)
-        }
+        determineAndSetState()
     }
 
     /**
@@ -50,19 +44,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
      * Calls to update the UI accordingly
      */
     fun powerConnected(){
-
-        if (!CurrentStatus.isArmed){ // Is armed, and now is connected - set green
-            updateBackgroundColor(R.color.colorAccent) // Set bg color
-        }
-
-        if(!CurrentStatus.isUnderAttack){ // Not under attack, set home text
-            updateStatusLabel(makeStatusLabelText(CurrentStatus.isArmed))
-        }
-        else{ // Device was under active enemy attack - but power has just been reconnected
-            armDevice()
-            showSnackMessage("Power has been reconnected. Device is still Armed.")
-            deviceNoLongerUnderAttack()
-        }
+        determineAndSetState()
     }
 
     /**
@@ -76,11 +58,9 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
         else{ // Device is charging! So proceed to arming
             toggleButton.startLoading()
             Handler().postDelayed({
-                toggleButton.loadingSuccessful()
-                updateBackgroundColor(R.color.colorSafe) // Set bg color
-                updateStatusLabel(makeStatusLabelText(true)) // Update status text
+                CurrentStatus.isArmed = true
+                setArmedState()
             }, 500)
-            CurrentStatus.isArmed = true
         }
     }
 
@@ -89,11 +69,8 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
      * Also resetting the UI and removing listener
      */
     fun disarmDevice(){
-        toggleButton.reset()
-        val bgCol = if (CurrentStatus.isConnected) R.color.colorAccent else R.color.colorNeutral
-        updateBackgroundColor(bgCol)
-        updateStatusLabel(makeStatusLabelText(false))
         CurrentStatus.isArmed = false
+        determineAndSetState()
     }
 
     /**
@@ -108,46 +85,14 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
         updateBackgroundColor(R.color.colorNearlyDanger)
         updateStatusLabel("Device under Attack.\n Alarm will sound unless plugged back in or dismissed")
         toggleButton.reset()
-        toggleButton.setText("Dismiss")
+        toggleButton.setText("Stop Alarm")
 
         Handler().postDelayed({
             toggleButton.startLoading()
-            updateBackgroundColor(R.color.colorDanger)
-            updateStatusLabel("Device under Attack. \nUnlock with your pass code, then tap here")
             Handler().postDelayed({
-                toggleButton.loadingFailed()
+                setAttackState()
             }, 2000)
         }, 2000)
-    }
-
-    /**
-     * Called when the device has either just been secured
-     * or the cable has been reconnected
-     * Will silence the alarm, reset notification
-     */
-    private fun deviceNoLongerUnderAttack() {
-        // todo
-    }
-
-    /**
-     * Returns a string, which will then be used as the label below button
-     * Takes an optional param of armed
-     */
-    private fun makeStatusLabelText( armed: Boolean = false ): String {
-        return if (armed){
-            mainActivity.getString(R.string.status_label_armed)
-        }
-        else {
-            mainActivity.getString(
-                    if (CurrentStatus.isConnected)
-                        R.string.status_label_charging
-                    else R.string.status_label_not_charging
-            ) +
-                    "\n" +
-                    mainActivity.getString(R.string.status_label_prefix) +
-                    " " +
-                    mainActivity.getString(R.string.status_label_unarmed)
-        }
     }
 
     /**
@@ -181,7 +126,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
     private fun updateStatusLabel(newTextValue: String = ""){
 
         /* Get reference to the status label */
-        val statusLabel: TextView = mainActivity.findViewById(R.id.status_label)
+        val statusLabel: TextView = mainActivity.findViewById<TextView>(R.id.status_label)
         val transitionsContainer = mainActivity.findViewById<ViewGroup>(R.id.mainLayout)
 
         /* Set up the animation configuration */
@@ -221,6 +166,57 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
                 .show()
     }
 
+    private fun determineAndSetState(){
+        val armed = CurrentStatus.isArmed
+        val charging = CurrentStatus.isConnected
+
+        if(armed && charging){
+            setArmedState()
+        }
+        else if(armed && !charging){
+            setAttackState()
+        }
+        else if(!armed && charging){
+            setReadyState()
+        }
+        else if(!armed && !charging){
+            setNeutralState()
+        }
+    }
+
+    private fun setReadyState(){
+        toggleButton.reset()
+        updateBackgroundColor(R.color.colorAccent)
+        toggleButton.setText(mainActivity.getString(R.string.btn_tap_to_protect))
+        updateStatusLabel(
+                mainActivity.getString(R.string.status_label_charging)+"\n"+
+                mainActivity.getString(R.string.status_label_unarmed)
+        )
+    }
+
+    private fun setArmedState(){
+        updateBackgroundColor(R.color.colorSafe)
+        toggleButton.setText(mainActivity.getString(R.string.btn_tap_to_disarm))
+        toggleButton.loadingSuccessful()
+        updateStatusLabel(mainActivity.getString(R.string.status_label_armed))
+    }
+
+    private fun setNeutralState(){
+        toggleButton.reset()
+        updateBackgroundColor(R.color.colorNeutral)
+        toggleButton.setText(mainActivity.getString(R.string.btn_plug_in_tap_here))
+        updateStatusLabel(
+                mainActivity.getString(R.string.status_label_not_charging)+"\n"+
+                mainActivity.getString(R.string.status_label_unarmed)
+        )
+    }
+
+    private fun setAttackState(){
+        updateBackgroundColor(R.color.colorDanger)
+        toggleButton.setText(mainActivity.getString(R.string.btn_tap_to_secure))
+        toggleButton.loadingFailed()
+        updateStatusLabel(mainActivity.getString(R.string.status_label_under_attack))
+    }
 
 
 }

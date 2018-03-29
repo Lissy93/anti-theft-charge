@@ -6,10 +6,16 @@
     <string name="how_to_use">How to Use</string>
     <string name="report_a_bug">Report a Bug</string>
     <string name="about">About</string>
-    <string name="status_label">Status:</string>
-    <string name="status_label_prefix">Status: </string>
+
     <string name="status_label_charging">Charging, Ready</string>
+    <string name="status_label_unarmed">Status: Unarmed</string>
+    <string name="status_label_armed">Status: Armed</string>
     <string name="status_label_not_charging">Not Charging, Connect Device First</string>
-    <string name="status_label_unarmed">Unarmed</string>
-    <string name="status_label_armed">Armed</string>
+    <string name="status_label_under_attack">Device under Attack. Alarm will sound unless plugged back in or dismissed</string>
+
+    <string name="btn_tap_to_protect">Tap to Protect Device</string>
+    <string name="btn_plug_in_tap_here">Plug-in, then tap here</string>
+    <string name="btn_tap_to_disarm">Tap to Disarm Device</string>
+    <string name="btn_tap_to_secure">Tap to Secure Device</string>
+
 </resources>
