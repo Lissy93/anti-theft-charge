@@ -36,7 +36,12 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
      * Determins what state the device is in, and takes appropriate action
      */
     fun powerDisconnected(){
-        determineAndSetState()
+        if(CurrentStatus.isArmed){
+            deviceIsUnderAttack()
+        }
+        else{
+            determineAndSetState()
+        }
     }
 
     /**
@@ -44,7 +49,12 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
      * Calls to update the UI accordingly
      */
     fun powerConnected(){
-        determineAndSetState()
+        if(CurrentStatus.isArmed) {
+            armDevice()
+        }
+        else{
+            determineAndSetState()
+        }
     }
 
     /**
@@ -83,9 +93,9 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
         CurrentStatus.isUnderAttack = true
 
         updateBackgroundColor(R.color.colorNearlyDanger)
-        updateStatusLabel("Device under Attack.\n Alarm will sound unless plugged back in or dismissed")
+        updateStatusLabel(mainActivity.getString(R.string.status_label_almost_under_attack))
         toggleButton.reset()
-        toggleButton.setText("Stop Alarm")
+        toggleButton.setText(mainActivity.getString(R.string.btn_tap_to_secure))
 
         Handler().postDelayed({
             toggleButton.startLoading()
@@ -126,7 +136,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
     private fun updateStatusLabel(newTextValue: String = ""){
 
         /* Get reference to the status label */
-        val statusLabel: TextView = mainActivity.findViewById<TextView>(R.id.status_label)
+        val statusLabel: TextView = mainActivity.findViewById(R.id.status_label)
         val transitionsContainer = mainActivity.findViewById<ViewGroup>(R.id.mainLayout)
 
         /* Set up the animation configuration */
@@ -162,10 +172,15 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
                                  buttonText: String = "",  buttonFunction: () -> Unit = fun (){}){
         val mainLayout = mainActivity.findViewById<View>(R.id.mainLayout)
         Snackbar.make(mainLayout, message, Snackbar.LENGTH_LONG)
-                .setAction(buttonText, View.OnClickListener { buttonFunction() })
+                .setAction(buttonText, { buttonFunction() })
                 .show()
     }
 
+    /**
+     * Based on weather the device is plugged in/ not plugged in
+     * and armed/ no armed, it calls the correct method to update the
+     * button and label text as well as colours
+     */
     private fun determineAndSetState(){
         val armed = CurrentStatus.isArmed
         val charging = CurrentStatus.isConnected
@@ -184,6 +199,9 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
         }
     }
 
+    /**
+     * Device is plugged in, but not armed
+     */
     private fun setReadyState(){
         toggleButton.reset()
         updateBackgroundColor(R.color.colorAccent)
@@ -194,6 +212,9 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
         )
     }
 
+    /**
+     * Device is plugged in, and is armed
+     */
     private fun setArmedState(){
         updateBackgroundColor(R.color.colorSafe)
         toggleButton.setText(mainActivity.getString(R.string.btn_tap_to_disarm))
@@ -201,6 +222,9 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
         updateStatusLabel(mainActivity.getString(R.string.status_label_armed))
     }
 
+    /**
+     * Device is neither plugged in, nor armed
+     */
     private fun setNeutralState(){
         toggleButton.reset()
         updateBackgroundColor(R.color.colorNeutral)
@@ -211,7 +235,11 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
         )
     }
 
+    /**
+     * Device is not plugged in, but is armed
+     */
     private fun setAttackState(){
+        toggleButton.reset()
         updateBackgroundColor(R.color.colorDanger)
         toggleButton.setText(mainActivity.getString(R.string.btn_tap_to_secure))
         toggleButton.loadingFailed()

@@ -11,7 +11,8 @@
     <string name="status_label_unarmed">Status: Unarmed</string>
     <string name="status_label_armed">Status: Armed</string>
     <string name="status_label_not_charging">Not Charging, Connect Device First</string>
-    <string name="status_label_under_attack">Device under Attack. Alarm will sound unless plugged back in or dismissed</string>
+    <string name="status_label_under_attack">Device under Attack. Reconnect cable, or unlock phone to disarm</string>
+    <string name="status_label_almost_under_attack">Device under Attack. Alarm will sound shortly, unless disarmed</string>
 
     <string name="btn_tap_to_protect">Tap to Protect Device</string>
     <string name="btn_plug_in_tap_here">Plug-in, then tap here</string>
