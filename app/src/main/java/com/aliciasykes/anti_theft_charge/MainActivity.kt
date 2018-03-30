@@ -60,6 +60,11 @@ class MainActivity : AppCompatActivity() {
             armDisarmFunctionality.showHelpDialog()
             prefrences!!.edit().putBoolean("firstRun", false).apply()
         }
+
+        /* Ensure armDisArmFunctionality, which is a lateint in CurrentStatus has been initialised */
+        armDisarmFunctionality = ArmDisarmFunctionality(this)
+        CurrentStatus.armDisarmFunctionality = armDisarmFunctionality
+
     }
 
     /**

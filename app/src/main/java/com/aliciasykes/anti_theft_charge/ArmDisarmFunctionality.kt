@@ -19,6 +19,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
 
     private var toggleButton: LoadingButton
     private var mainActivity: MainActivity = _mainActivity
+    private var au: AlarmUtil = AlarmUtil(mainActivity)
 
     init {
         toggleButton = mainActivity.findViewById<View>(R.id.toggleButton) as LoadingButton
@@ -66,6 +67,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
             showSnackMessage("Plug device in first", " Explain More ", ::showHelpDialog)
         }
         else{ // Device is charging! So proceed to arming
+            au.stopTheAlarm()
             toggleButton.startLoading()
             Handler().postDelayed({
                 CurrentStatus.isArmed = true
@@ -92,10 +94,14 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
 
         CurrentStatus.isUnderAttack = true
 
+        /* Initial UI warning state */
         updateBackgroundColor(R.color.colorNearlyDanger)
         updateStatusLabel(mainActivity.getString(R.string.status_label_almost_under_attack))
         toggleButton.reset()
         toggleButton.setText(mainActivity.getString(R.string.btn_tap_to_secure))
+
+        /* Sound the alarm */
+        au.soundTheAlarm()
 
         Handler().postDelayed({
             toggleButton.startLoading()
