@@ -20,6 +20,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
     private var toggleButton: LoadingButton
     private var mainActivity: MainActivity = _mainActivity
     private var au: AlarmUtil = AlarmUtil(mainActivity)
+    private var nu: NotificationUtil = NotificationUtil(mainActivity)
 
     init {
         toggleButton = mainActivity.findViewById<View>(R.id.toggleButton) as LoadingButton
@@ -72,6 +73,10 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
             Handler().postDelayed({
                 CurrentStatus.isArmed = true
                 setArmedState()
+
+                /* Show the notification */
+                nu.showNotification()
+
             }, 500)
         }
     }
@@ -102,6 +107,9 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
 
         /* Sound the alarm */
         au.soundTheAlarm()
+
+        /* Show the notification */
+        nu.showNotification()
 
         Handler().postDelayed({
             toggleButton.startLoading()
