@@ -170,7 +170,11 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
     fun showHelpDialog(){
         MaterialStyledDialog.Builder(mainActivity)
                 .setTitle("How to Use")
-                .setDescription("Lorem Ipsum dolor sit ammet")
+                .setDescription(
+                    "To get started, connect your device to a power source, and tap \"Protect\". "+
+                    "Then, when you want to unplug your phone you must first unlock it (with your "+
+                    "fingerprint or passcode), and then tap Disarm."
+                )
                 .setScrollable(true)
                 .setIcon(R.drawable.icon)
                 .setCancelable(true)
