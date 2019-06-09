@@ -75,7 +75,11 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
                 setArmedState()
 
                 /* Show the notification */
-                nu.showNotification()
+                nu.showNotification(
+                        mainActivity.getString(R.string.notification_title_armed),
+                        mainActivity.getString(R.string.notification_description_armed),
+                        "armed"
+                )
 
             }, 500)
         }
@@ -109,7 +113,11 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
         au.soundTheAlarm()
 
         /* Show the notification */
-        nu.showNotification()
+        nu.showNotification(
+            mainActivity.getString(R.string.notification_title_attack),
+            mainActivity.getString(R.string.notification_description_attack),
+            "attack"
+        )
 
         Handler().postDelayed({
             toggleButton.startLoading()

@@ -7,6 +7,7 @@ import com.dx.dxloadingbutton.lib.LoadingButton
 import android.view.Menu
 import android.view.MenuItem
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.SystemClock
 
 class MainActivity : AppCompatActivity() {
@@ -33,13 +34,13 @@ class MainActivity : AppCompatActivity() {
 
         /* Get the main toggle button, and call stuff when it is pressed */
         toggleButton = findViewById<View>(R.id.toggleButton) as LoadingButton
-        toggleButton.setOnClickListener({
+        toggleButton.setOnClickListener{
             /* Check that not an accidental double-tap, then toggle arm status */
             if (SystemClock.elapsedRealtime() - toggleLastClickTime > 1000){
                 toggleLastClickTime = SystemClock.elapsedRealtime()
                 armDisarmFunctionality.toggleDeviceArming()
             }
-        })
+        }
         toggleButton.isResetAfterFailed = false
         toggleButton.setTextSize(26) // Unfortunately this has to be done programmatically...
 

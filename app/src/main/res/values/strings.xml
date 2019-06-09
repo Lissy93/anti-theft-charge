@@ -19,4 +19,11 @@
     <string name="btn_tap_to_disarm">Tap to Disarm Device</string>
     <string name="btn_tap_to_secure">Tap to Secure Device</string>
 
+    <string name="primary_notification_channel">PRIMARY</string>
+    <string name="what_is_notification">These notifications display when your device is armed</string>
+    <string name="notification_title_armed">Armed</string>
+    <string name="notification_description_armed">Your device is protected. Tap to disarm</string>/
+    <string name="notification_title_attack">Under Attack!</string>/
+    <string name="notification_description_attack">Device has been disconnected without first disarming</string>/
+
 </resources>
