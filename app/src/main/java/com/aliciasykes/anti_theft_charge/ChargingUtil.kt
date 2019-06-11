@@ -13,7 +13,7 @@ class ChargingUtil (context: Context? = null){
     }
 
     /**
-     * Determines wheather the device is currently plugged-in
+     * Determines weather the device is currently plugged-in
      * @param context
      * @return boolean
      */
@@ -41,8 +41,6 @@ class ChargingUtil (context: Context? = null){
             }
         }
     }
-
-
 }
 
 

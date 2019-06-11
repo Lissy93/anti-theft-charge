@@ -9,6 +9,12 @@ import android.view.MenuItem
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.SystemClock
+import android.app.job.JobScheduler
+import android.support.v4.content.ContextCompat.getSystemService
+import android.app.job.JobInfo
+import android.content.ComponentName
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,6 +57,9 @@ class MainActivity : AppCompatActivity() {
         /* Put app into correct (armed/disarmed) state */
         if(CurrentStatus.isArmed) armDisarmFunctionality.armDevice()
         else armDisarmFunctionality.disarmDevice()
+
+        /* Start listening for when the power connector changes */
+        startPowerConnectionListener()
     }
 
     override fun onResume() {
@@ -101,6 +110,16 @@ class MainActivity : AppCompatActivity() {
             }
             else -> return super.onOptionsItemSelected(item)
         }
+    }
+
+
+    private fun startPowerConnectionListener() {
+        val serviceComponent = ComponentName(this, PowerConnectionService::class.java)
+        val builder = JobInfo.Builder(0, serviceComponent)
+        builder.setMinimumLatency((200)) // wait time
+        builder.setOverrideDeadline((200)) // maximum delay
+        val jobScheduler = this.getSystemService(JobScheduler::class.java)
+        jobScheduler.schedule(builder.build())
     }
 
 }

@@ -14,13 +14,19 @@ import com.dx.dxloadingbutton.lib.LoadingButton
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
 import com.transitionseverywhere.ChangeText
 import com.transitionseverywhere.TransitionManager
+import android.R.string.cancel
+import android.content.Context.NOTIFICATION_SERVICE
+import android.support.v4.content.ContextCompat.getSystemService
+import android.app.NotificationManager
+import android.content.Context
+
 
 class ArmDisarmFunctionality(_mainActivity: MainActivity) {
 
     private var toggleButton: LoadingButton
     private var mainActivity: MainActivity = _mainActivity
     private var au: AlarmUtil = AlarmUtil(mainActivity)
-    private var nu: NotificationUtil = NotificationUtil(mainActivity)
+    private var nu: NotificationUtil = NotificationUtil(mainActivity, "atf")
 
     init {
         toggleButton = mainActivity.findViewById<View>(R.id.toggleButton) as LoadingButton
@@ -78,7 +84,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
                 nu.showNotification(
                         mainActivity.getString(R.string.notification_title_armed),
                         mainActivity.getString(R.string.notification_description_armed),
-                        "armed"
+                        0
                 )
 
             }, 500)
@@ -92,6 +98,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
     fun disarmDevice(){
         CurrentStatus.isArmed = false
         determineAndSetState()
+        nu.dismissSpecificNotification(0)
     }
 
     /**
@@ -116,7 +123,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
         nu.showNotification(
             mainActivity.getString(R.string.notification_title_attack),
             mainActivity.getString(R.string.notification_description_attack),
-            "attack"
+            1
         )
 
         Handler().postDelayed({
@@ -198,7 +205,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
                                  buttonText: String = "",  buttonFunction: () -> Unit = fun (){}){
         val mainLayout = mainActivity.findViewById<View>(R.id.mainLayout)
         Snackbar.make(mainLayout, message, Snackbar.LENGTH_LONG)
-                .setAction(buttonText, { buttonFunction() })
+                .setAction(buttonText) { buttonFunction() }
                 .show()
     }
 
@@ -259,6 +266,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
                 mainActivity.getString(R.string.status_label_not_charging)+"\n"+
                 mainActivity.getString(R.string.status_label_unarmed)
         )
+        nu.dismissAllNotifications()
     }
 
     /**
