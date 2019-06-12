@@ -1,12 +1,13 @@
 package com.aliciasykes.anti_theft_charge
 
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
+import android.app.PendingIntent
+import android.content.Intent
 
 class NotificationUtil(_mainActivity: MainActivity, channelId: String) {
 
@@ -19,17 +20,27 @@ class NotificationUtil(_mainActivity: MainActivity, channelId: String) {
 
     /**
      * Receives a title and description, then initialises the chanel and displays the notification
-     * NotificationId: 0 = armed, 1 = under sttack
+     * NotificationId: 0 = armed, 1 = under attack
      */
     fun showNotification(title: String, description: String, notificationID: Int){
         val channelId = "atc"
         createNotificationChannel(channelId)
+
+        val contentIntent = PendingIntent.getActivity(
+                mainActivity, 0,
+                Intent(mainActivity,
+                MainActivity::class.java),
+                PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
         val builder = NotificationCompat.Builder(mainActivity, channelId)
             .setSmallIcon(R.drawable.icon)
             .setContentTitle(title)
             .setContentText(description)
             .setStyle(NotificationCompat.BigTextStyle())
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setOngoing(true)
+            .setContentIntent(contentIntent)
         with(NotificationManagerCompat.from(mainActivity)) {
             notify(notificationID, builder.build())
         }
