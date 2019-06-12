@@ -60,7 +60,13 @@ class PowerConnectionService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(connectionChangedReceiver)
+        try { // Receiver won't be registered on pre-Android 7 devices
+            unregisterReceiver(connectionChangedReceiver)
+        }
+        catch (e: Throwable) {
+            // Do fuck all
+        }
+
     }
 
     override fun onBind(intent: Intent): IBinder? {

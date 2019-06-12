@@ -1,5 +1,6 @@
 package com.aliciasykes.anti_theft_charge
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -10,10 +11,10 @@ import android.support.v4.app.NotificationManagerCompat
 class NotificationUtil(_mainActivity: MainActivity, channelId: String) {
 
     private var mainActivity: MainActivity = _mainActivity
-    private lateinit var notificationManager: NotificationManager
+    private var notificationManager: NotificationManager
 
     init {
-        createNotificationChannel(channelId)
+        notificationManager = createNotificationChannel(channelId)
     }
 
     /**
@@ -45,15 +46,16 @@ class NotificationUtil(_mainActivity: MainActivity, channelId: String) {
     /**
      * Create the notification chanel, and set the importance
      */
-    private fun createNotificationChannel(channelId: String) {
+    private fun createNotificationChannel(channelId: String): NotificationManager {
+        val localNotificationManager =
+                mainActivity.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = mainActivity.getString(R.string.app_name)
             val importance = NotificationManager.IMPORTANCE_DEFAULT
             val channel = NotificationChannel(channelId, name, importance)
             channel.description = mainActivity.getString(R.string.what_is_notification)
-            notificationManager =
-                mainActivity.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
+            localNotificationManager.createNotificationChannel(channel)
         }
+        return localNotificationManager
     }
 }
