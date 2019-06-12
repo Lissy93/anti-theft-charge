@@ -7,18 +7,14 @@ import com.dx.dxloadingbutton.lib.LoadingButton
 import android.view.Menu
 import android.view.MenuItem
 import android.content.SharedPreferences
-import android.os.Build
 import android.os.SystemClock
 import android.app.job.JobScheduler
-import android.support.v4.content.ContextCompat.getSystemService
 import android.app.job.JobInfo
 import android.content.ComponentName
 
-
-
 class MainActivity : AppCompatActivity() {
 
-    private var prefrences: SharedPreferences? = null // Reference to SharedPreferences
+    private var preferences: SharedPreferences? = null // Reference to SharedPreferences
 
     private lateinit var toggleButton: LoadingButton // Reference to the main toggle button
     private var toggleLastClickTime: Long = 0 // Used to ensure user doesn't accidentally double tap on arm
@@ -36,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
 
         /* Load app preferences */
-        prefrences = getSharedPreferences("com.aliciasykes.anti_theft_charge", MODE_PRIVATE)
+        preferences = getSharedPreferences("com.aliciasykes.anti_theft_charge", MODE_PRIVATE)
 
         /* Get the main toggle button, and call stuff when it is pressed */
         toggleButton = findViewById<View>(R.id.toggleButton) as LoadingButton
@@ -66,9 +62,9 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
 
         /* If this is the first time user has fun the app- show help dialog */
-        if (!prefrences!!.contains("firstRun")) {
+        if (!preferences!!.contains("firstRun")) {
             armDisarmFunctionality.showHelpDialog()
-            prefrences!!.edit().putBoolean("firstRun", false).apply()
+            preferences!!.edit().putBoolean("firstRun", false).apply()
         }
 
         /* Ensure armDisArmFunctionality, which is a lateint in CurrentStatus has been initialised */
@@ -112,7 +108,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+    /**
+     * Initiates the service, that will listen for power connector changes
+     */
     private fun startPowerConnectionListener() {
         val serviceComponent = ComponentName(this, PowerConnectionService::class.java)
         val builder = JobInfo.Builder(0, serviceComponent)

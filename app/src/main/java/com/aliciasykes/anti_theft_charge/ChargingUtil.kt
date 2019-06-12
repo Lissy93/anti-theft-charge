@@ -17,7 +17,7 @@ class ChargingUtil (context: Context? = null){
      * @param context
      * @return boolean
      */
-    fun checkIfDeviceConnected(context: Context): Boolean {
+    private fun checkIfDeviceConnected(context: Context): Boolean {
         val intent = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
         val plugged = intent!!.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1)
         CurrentStatus.isConnected = plugged == BatteryManager.BATTERY_PLUGGED_AC || plugged == BatteryManager.BATTERY_PLUGGED_USB
@@ -29,15 +29,17 @@ class ChargingUtil (context: Context? = null){
         /**
          * Called when BroadcastReceiver emits a power connected or disconnected change
          * Updates static powerConnected reference and calls to update the UI
+         * This is a fallback for pre Android 7 systems
          */
         override fun onReceive(context: Context, intent: Intent) {
-            if (intent.action == Intent.ACTION_POWER_CONNECTED) {
-                CurrentStatus.isConnected = true
-                CurrentStatus.armDisarmFunctionality.powerConnected()
-            }
-            else if (intent.action == Intent.ACTION_POWER_DISCONNECTED) {
-                CurrentStatus.isConnected = false
-                CurrentStatus.armDisarmFunctionality.powerDisconnected()
+            if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.N) {
+                if (intent.action == Intent.ACTION_POWER_CONNECTED) {
+                    CurrentStatus.isConnected = true
+                    CurrentStatus.armDisarmFunctionality.powerConnected()
+                } else if (intent.action == Intent.ACTION_POWER_DISCONNECTED) {
+                    CurrentStatus.isConnected = false
+                    CurrentStatus.armDisarmFunctionality.powerDisconnected()
+                }
             }
         }
     }
