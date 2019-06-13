@@ -11,21 +11,31 @@ import android.os.SystemClock
 import android.app.job.JobScheduler
 import android.app.job.JobInfo
 import android.content.ComponentName
+import android.app.ActivityManager
+import android.content.Context
+import android.util.Log
+import android.content.Intent
 
 class MainActivity : AppCompatActivity() {
 
     private var preferences: SharedPreferences? = null // Reference to SharedPreferences
-
+    private lateinit var armDisarmFunctionality: ArmDisarmFunctionality
+    private lateinit var chargingUtil: ChargingUtil
     private lateinit var toggleButton: LoadingButton // Reference to the main toggle button
     private var toggleLastClickTime: Long = 0 // Used to ensure user doesn't accidentally double tap on arm
 
-    private lateinit var armDisarmFunctionality: ArmDisarmFunctionality
-    private lateinit var chargingUtil: ChargingUtil
+    companion object {
+        var activityActive = false
+    }
+
+    val isActivityActive get() = activityActive
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        activityActive = true
 
+        /* Init the arming/ disarming functionality, and get current status */
         armDisarmFunctionality = ArmDisarmFunctionality(this)
         CurrentStatus.armDisarmFunctionality = armDisarmFunctionality
         chargingUtil = ChargingUtil(applicationContext)
@@ -56,6 +66,11 @@ class MainActivity : AppCompatActivity() {
 
         /* Start listening for when the power connector changes */
         startPowerConnectionListener()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        activityActive = false
     }
 
     override fun onResume() {
@@ -109,6 +124,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
+     * Determines if a given service (given by class name) is running
+     */
+    @SuppressWarnings("deprecation") // for ActivityManager.getRunningServices
+    private fun isMyServiceRunning(serviceClass: Class<*>): Boolean {
+        val manager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        for (service in manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.name == service.service.className) {
+                return true
+            }
+        }
+        return false
+    }
+
+    /**
      * Initiates the service, that will listen for power connector changes
      */
     private fun startPowerConnectionListener() {
@@ -118,6 +147,11 @@ class MainActivity : AppCompatActivity() {
         builder.setOverrideDeadline((200)) // maximum delay
         val jobScheduler = this.getSystemService(JobScheduler::class.java)
         jobScheduler.schedule(builder.build())
+
+        val serviceIntent = Intent(this, serviceComponent::class.java)
+        if (!isMyServiceRunning(serviceComponent::class.java)) {
+            startService(serviceIntent)
+        }
     }
 
 }

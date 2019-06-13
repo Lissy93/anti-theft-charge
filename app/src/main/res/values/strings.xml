@@ -25,5 +25,4 @@
     <string name="notification_description_armed">Your device is protected</string>/
     <string name="notification_title_attack">Under Attack!</string>/
     <string name="notification_description_attack">Device has been disconnected without first disarming</string>/
-
 </resources>

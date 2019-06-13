@@ -19,6 +19,9 @@ import android.content.Context.NOTIFICATION_SERVICE
 import android.support.v4.content.ContextCompat.getSystemService
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
+import android.support.v4.content.ContextCompat.startActivity
+import android.widget.Toast
 
 
 class ArmDisarmFunctionality(_mainActivity: MainActivity) {
@@ -41,10 +44,10 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
 
     /**
      * Called by the event emitter when the power is disconnected
-     * Determins what state the device is in, and takes appropriate action
+     * Determine what state the device is in, and takes appropriate action
      */
     fun powerDisconnected(){
-        if(CurrentStatus.isArmed){
+        if(CurrentStatus.isArmed && !CurrentStatus.isUnderAttack){
             deviceIsUnderAttack()
         }
         else{
@@ -126,6 +129,11 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
             1
         )
 
+        /* If the MainActivity isn't currently open, open it */
+        if (!mainActivity.isActivityActive)
+            mainActivity.startActivity(Intent(mainActivity, MainActivity::class.java))
+
+        /* After 2 seconds, go fully red*/
         Handler().postDelayed({
             toggleButton.startLoading()
             Handler().postDelayed({
