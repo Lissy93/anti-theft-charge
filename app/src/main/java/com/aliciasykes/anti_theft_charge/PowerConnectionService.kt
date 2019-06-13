@@ -58,6 +58,10 @@ class PowerConnectionService : Service() {
         return startId
     }
 
+    /**
+     * Deregister the receiver
+     * Initialise the broadcast intent, which will keep app running in background
+     */
     override fun onDestroy() {
         super.onDestroy()
         try { // Receiver won't be registered on pre-Android 7 devices
@@ -66,7 +70,10 @@ class PowerConnectionService : Service() {
         catch (e: Throwable) {
             // Do fuck all
         }
-
+//        val broadcastIntent = Intent()
+//        broadcastIntent.action = "restartservice"
+//        broadcastIntent.setClass(this, Restarter::class.java)
+//        this.sendBroadcast(broadcastIntent)
     }
 
     override fun onBind(intent: Intent): IBinder? {
