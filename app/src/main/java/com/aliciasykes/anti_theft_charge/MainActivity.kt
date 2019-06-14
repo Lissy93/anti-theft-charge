@@ -1,20 +1,19 @@
 package com.aliciasykes.anti_theft_charge
 
-import android.support.v7.app.AppCompatActivity
+import android.app.ActivityManager
+import android.app.job.JobInfo
+import android.app.job.JobScheduler
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.View
-import com.dx.dxloadingbutton.lib.LoadingButton
+import android.os.SystemClock
+import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.content.SharedPreferences
-import android.os.SystemClock
-import android.app.job.JobScheduler
-import android.app.job.JobInfo
-import android.content.ComponentName
-import android.app.ActivityManager
-import android.content.Context
-import android.util.Log
-import android.content.Intent
+import android.view.View
+import com.dx.dxloadingbutton.lib.LoadingButton
 
 class MainActivity : AppCompatActivity() {
 

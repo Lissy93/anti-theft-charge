@@ -14,15 +14,7 @@ import com.dx.dxloadingbutton.lib.LoadingButton
 import com.github.javiersantos.materialstyleddialogs.MaterialStyledDialog
 import com.transitionseverywhere.ChangeText
 import com.transitionseverywhere.TransitionManager
-import android.R.string.cancel
-import android.content.Context.NOTIFICATION_SERVICE
-import android.support.v4.content.ContextCompat.getSystemService
-import android.app.NotificationManager
-import android.content.Context
 import android.content.Intent
-import android.support.v4.content.ContextCompat.startActivity
-import android.widget.Toast
-
 
 class ArmDisarmFunctionality(_mainActivity: MainActivity) {
 
@@ -60,6 +52,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
      * Calls to update the UI accordingly
      */
     fun powerConnected(){
+        au.stopTheAlarm()
         if(CurrentStatus.isArmed) {
             armDevice()
         }
@@ -73,7 +66,8 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
      * Updates UI and calls appropriate methods
      */
     fun armDevice(){
-        if(!CurrentStatus.isConnected){ // NOT charging, show message and exit func
+        /* If the user tries to arm the device, before it's connected, show message*/
+        if(!CurrentStatus.isConnected && !CurrentStatus.isUnderAttack){
             showSnackMessage("Plug device in first", " Explain More ", ::showHelpDialog)
         }
         else{ // Device is charging! So proceed to arming
@@ -102,6 +96,7 @@ class ArmDisarmFunctionality(_mainActivity: MainActivity) {
         CurrentStatus.isArmed = false
         determineAndSetState()
         nu.dismissSpecificNotification(0)
+        au.stopTheAlarm()
     }
 
     /**
