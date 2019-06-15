@@ -70,10 +70,10 @@ class PowerConnectionService : Service() {
         catch (e: Throwable) {
             // Do fuck all
         }
-//        val broadcastIntent = Intent()
-//        broadcastIntent.action = "restartservice"
-//        broadcastIntent.setClass(this, Restarter::class.java)
-//        this.sendBroadcast(broadcastIntent)
+        val broadcastIntent = Intent()
+        broadcastIntent.action = "restartservice"
+        broadcastIntent.setClass(this, Restarter::class.java)
+        this.sendBroadcast(broadcastIntent)
     }
 
     override fun onBind(intent: Intent): IBinder? {
