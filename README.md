@@ -1,6 +1,5 @@
 # Anti Theft Charge
 
-![demo-1](demo/atc-initial-app-start.gif)
 ![demo-2](demo/atc-device-protected.gif)
 
 
@@ -15,6 +14,9 @@ Ever need to charge your phone in a pubic space, like a train, hostel or airport
 Developed in 24 hours at AngelHack London 2014, won 2nd prize 🏆. Had 100,000 downloads on the Play Store 📲, before it was removed for not having a Privacy Policy 😲, lol. Rewrote it in Kotlin in 2019, just for fun, but decided not to publish it, since there is enough crap on the App Store already 💩. But if you'd like to use it, [here is the APK](demo/app-release.apk).
 
 I used to sleep in hostels, I'd have  my phone on charge by my pillow. After I wrote this app, there were several occasions when people tried to take my device, but they got the fright of their life when the loud alarm went off, each time dropping it and running off 🏃, or claiming they thought it was their phone 😂. So it served it's purpose well 🙌.
+
+
+![demo-1](demo/atc-initial-app-start.gif)
 
 
 ### How it works
