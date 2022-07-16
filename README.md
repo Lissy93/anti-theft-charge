@@ -1,6 +1,13 @@
-# Anti Theft Charge
+<h1 align="center">🔋 Anti Theft Charge</h1>
+<p align="center">
+  <i>Safely charge your phone in public places without the worry of it being stolen</i>
+</p>
 
-![demo-2](demo/atc-device-protected.gif)
+<p align="center">
+<img width="300" src="demo/atc-device-protected.gif"/>
+<br><i>Demo Screen Recording</i>
+</p>
+
 
 
 [![codebeat badge](https://codebeat.co/badges/f920568a-0d1c-444f-ae62-9e06ff23b351)](https://codebeat.co/projects/github-com-lissy93-anti-theft-charge-master)
@@ -11,12 +18,12 @@ Ever need to charge your phone in a pubic space, like a train, hostel or airport
 
 
 ### About
-Developed in 24 hours at AngelHack London 2014, won 2nd prize 🏆. Had 100,000 downloads on the Play Store 📲, before it was removed for not having a Privacy Policy 😲, lol. Rewrote it in Kotlin in 2019, just for fun, but decided not to publish it, since there is enough crap on the App Store already 💩. But if you'd like to use it, [here is the APK](demo/app-release.apk).
+Developed in 24 hours at AngelHack London 2014, won 2nd prize 🏆. Had 100,000 downloads on the Play Store 📲, before it was removed for not having a Privacy Policy 😅. Rewrote it in Kotlin in 2017, just for fun, while I was in hosipital after an accident (i was high af 💊). But decided not to publish it, since there is enough crap on the App Store already 💩.
+But if you'd like to use it, [here is the APK](demo/app-release.apk). The source was last updated in 2019.
 
 I used to sleep in hostels, I'd have  my phone on charge by my pillow. After I wrote this app, there were several occasions when people tried to take my device, but they got the fright of their life when the loud alarm went off, each time dropping it and running off 🏃, or claiming they thought it was their phone 😂. So it served it's purpose well 🙌.
 
-
-![demo-1](demo/atc-initial-app-start.gif)
+<p align="center"><img width="300" src="demo/atc-initial-app-start.gif"/></p>
 
 
 ### How it works
@@ -38,5 +45,11 @@ If you want to improve something, add a feature or fix a bug, feel free to submi
 This project is open source, feel free to do anything you like with the code.
 [Licensed under MIT](LICENSE.md).
 
-**© [Alicia Sykes](https://aliciasykes.com) 2019**
+---
+
+<p  align="center">
+  <i>© <a href="https://aliciasykes.com">Alicia Sykes</a> 2014 - 2019</i><br>
+  <i>Licensed under <a href="https://gist.github.com/Lissy93/143d2ee01ccc5c052a17">MIT</a></i><br>
+  <a href="https://github.com/lissy93"><img src="https://i.ibb.co/4KtpYxb/octocat-clean-mini.png" /></a>
+</p>
 
